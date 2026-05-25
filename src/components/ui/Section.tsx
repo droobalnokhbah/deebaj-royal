@@ -16,16 +16,16 @@ export function Section({
   description,
 }: SectionProps) {
   return (
-    <section className={`py-16 sm:py-20 lg:py-24 ${className}`}>
+    <section className={`py-20 sm:py-24 lg:py-32 ${className}`}>
       {(eyebrow || title || description) && (
-        <div className="mb-10 max-w-3xl">
+        <div className="mb-12 max-w-3xl lg:mb-16">
           {eyebrow && (
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-honey">
               {eyebrow}
             </p>
           )}
           {title && (
-            <h2 className="font-serif text-3xl font-medium leading-tight text-ink sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-4xl font-medium leading-[1.08] text-ink sm:text-5xl lg:text-6xl">
               {title}
             </h2>
           )}

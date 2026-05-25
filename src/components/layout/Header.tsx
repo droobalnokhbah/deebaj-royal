@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MobileNavigation } from '@/components/layout/MobileNavigation';
 import { Container } from '@/components/ui/Container';
 
 type HeaderProps = {
@@ -21,17 +22,19 @@ export function Header({ locale }: HeaderProps) {
   const isArabic = locale === 'ar';
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gold/20 bg-cream/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-gold/20 bg-cream/90 backdrop-blur-xl">
       <div className="border-b border-gold/10 bg-honey-deep text-cream">
-        <Container className="flex min-h-9 items-center justify-center text-center text-[11px] font-medium tracking-[0.12em]">
+        <Container className="flex min-h-9 items-center justify-center text-center text-[11px] font-medium tracking-[0.12em] text-cream/90">
           <span>
-            شحن مجاني فوق ٢٠٠ ريال · ضمان رضا ١٤ يوم · تجربة سعودية فاخرة
+            {isArabic
+              ? 'شحن مجاني فوق ٢٠٠ ريال · ضمان رضا ١٤ يوم · تجربة سعودية فاخرة'
+              : 'Free shipping over 200 SAR · 14-day satisfaction guarantee · Saudi luxury care'}
           </span>
         </Container>
       </div>
-      <Container className="flex min-h-20 items-center justify-between gap-6">
+      <Container className="flex min-h-20 items-center justify-between gap-5">
         <Link href={localizedPath(locale, '/')} className="shrink-0">
-          <span className="block font-logo text-lg tracking-[0.38em] text-ink">
+          <span className="block font-logo text-base tracking-[0.4em] text-ink sm:text-lg">
             D E E B A J
           </span>
           <span className="block text-center text-xs uppercase tracking-[0.34em] text-honey">
@@ -54,12 +57,15 @@ export function Header({ locale }: HeaderProps) {
           ))}
         </nav>
 
-        <Link
-          href={localizedPath(locale, '/checkout')}
-          className="rounded-full border border-honey/30 px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-honey hover:bg-cream-soft"
-        >
-          {isArabic ? 'السلة' : 'Cart'}
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href={localizedPath(locale, '/checkout')}
+            className="hidden rounded-full border border-honey/30 px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-honey hover:bg-cream-soft sm:inline-flex"
+          >
+            {isArabic ? 'السلة' : 'Cart'}
+          </Link>
+          <MobileNavigation locale={locale} items={navItems} />
+        </div>
       </Container>
     </header>
   );
