@@ -2,8 +2,15 @@
 // Root Layout — Next.js 14 App Router
 // File: src/app/[locale]/layout.tsx
 // ════════════════════════════════════════════
-import type { Metadata } from 'next';
-import { Cinzel, Cormorant_Garamond, Poppins } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
+import {
+  Cinzel,
+  Cormorant_Garamond,
+  IBM_Plex_Sans_Arabic,
+  Inter,
+} from 'next/font/google';
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
 import './globals.css';
 
 // Fonts
@@ -22,10 +29,16 @@ const cormorant = Cormorant_Garamond({
   display: 'swap',
 });
 
-const poppins = Poppins({
+const inter = Inter({
   subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-poppins',
+  variable: '--font-arabic',
   display: 'swap',
 });
 
@@ -98,11 +111,14 @@ export const metadata: Metadata = {
     },
   },
   manifest: '/manifest.json',
-  themeColor: '#FCF8EE',
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#FCF8EE',
 };
 
 // ════════════════════════════════════════════
@@ -171,7 +187,7 @@ export default function RootLayout({
     <html
       lang={locale}
       dir={isRTL ? 'rtl' : 'ltr'}
-      className={`${cinzel.variable} ${cormorant.variable} ${poppins.variable}`}
+      className={`${cinzel.variable} ${cormorant.variable} ${inter.variable} ${ibmPlexArabic.variable}`}
     >
       <head>
         <script
@@ -184,7 +200,9 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-cream text-ink font-arabic antialiased">
-        {children}
+        <Header locale={locale} />
+        <main>{children}</main>
+        <Footer locale={locale} />
         
         {/* Analytics */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (

@@ -8,9 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Deebaj Royal Brand Colors (Brown Honey)
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       colors: {
         // Backgrounds
         cream: {
@@ -47,29 +47,29 @@ const config: Config = {
           700: '#7A5818',
         },
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Typography
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       fontFamily: {
         // Arabic
-        arabic: ['"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+        arabic: ['var(--font-arabic)', 'system-ui', 'sans-serif'],
         // English Serif (luxury)
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
         // English Sans
-        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         // Logo
-        logo: ['Cinzel', 'serif'],
+        logo: ['var(--font-cinzel)', 'serif'],
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Spacing & Layout
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       maxWidth: {
         '8xl': '88rem',
         '9xl': '96rem',
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Animations
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       keyframes: {
         'fade-in': {
           '0%': { opacity: '0' },
@@ -84,9 +84,9 @@ const config: Config = {
         'fade-in': 'fade-in 0.6s ease-out',
         'slide-up': 'slide-up 0.8s ease-out',
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Gradients
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       backgroundImage: {
         'honey-gradient':
           'linear-gradient(135deg, #906820 0%, #7A5818 50%, #5C3E10 100%)',
