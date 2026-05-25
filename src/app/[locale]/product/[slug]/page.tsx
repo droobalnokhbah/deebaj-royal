@@ -41,7 +41,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             <div className="flex aspect-square items-center justify-center rounded-[2rem] border border-gold/30 bg-cream/70 text-center">
               <div>
                 <p className="font-logo text-3xl tracking-[0.34em] text-honey">
-                  DEEBAJ
+                  D E E B A J
                 </p>
                 <p className="mt-4 text-xs uppercase tracking-[0.35em] text-ink-mute">
                   {tag}
@@ -59,7 +59,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             </h1>
             <p className="mt-5 text-lg leading-9 text-ink-soft">{description}</p>
             <p className="mt-8 text-2xl font-semibold text-honey">
-              {product.price} SAR
+              {product.price} {isArabic ? 'ريال' : 'SAR'}
             </p>
 
             <ul className="mt-8 grid gap-3 text-sm text-ink-soft">
@@ -71,9 +71,11 @@ export default function ProductPage({ params }: ProductPageProps) {
             </ul>
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Button href={`/${params.locale}/checkout`}>Continue to checkout</Button>
+              <Button href={`/${params.locale}/checkout`}>
+                {isArabic ? 'متابعة الطلب' : 'Continue to checkout'}
+              </Button>
               <Button href={`/${params.locale}/shop`} variant="secondary">
-                Back to shop
+                {isArabic ? 'العودة للمنتجات' : 'Back to shop'}
               </Button>
             </div>
           </div>

@@ -10,6 +10,7 @@ type PageProps = {
 
 export default function HomePage({ params }: PageProps) {
   const { locale } = params;
+  const isArabic = locale === 'ar';
   const featuredProducts = getFeaturedProducts();
 
   return (
@@ -18,20 +19,24 @@ export default function HomePage({ params }: PageProps) {
         <Container className="grid min-h-[72vh] items-center gap-12 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
           <div>
             <p className="mb-6 text-xs font-semibold uppercase tracking-[0.32em] text-honey">
-              Deebaj Royal
+              {isArabic ? 'ديباج رويال' : 'Deebaj Royal'}
             </p>
             <h1 className="font-serif text-5xl font-medium leading-[1.05] text-ink sm:text-6xl lg:text-7xl">
-              Luxury everyday care, refined for modern homes.
+              {isArabic
+                ? 'نعومة القطن بلمسة الحرير.'
+                : 'Cotton softness with a silk touch.'}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-9 text-ink-soft">
-              A calm, premium foundation for the Deebaj Royal storefront. Phase 1
-              keeps the experience minimal while preparing the site for scalable
-              commerce pages.
+              {isArabic
+                ? 'تجربة سعودية فاخرة للعناية اليومية، مصممة بهدوء وأناقة للمنازل الراقية ومساحات الضيافة.'
+                : 'A Saudi luxury care experience, designed with calm elegance for refined homes and hospitality spaces.'}
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Button href={`/${locale}/shop`}>Shop collection</Button>
+              <Button href={`/${locale}/shop`}>
+                {isArabic ? 'تسوق الآن' : 'Shop collection'}
+              </Button>
               <Button href={`/${locale}/luxury-experience`} variant="secondary">
-                Explore the experience
+                {isArabic ? 'اكتشف التجربة' : 'Explore the experience'}
               </Button>
             </div>
           </div>
@@ -40,10 +45,10 @@ export default function HomePage({ params }: PageProps) {
             <div className="flex aspect-[4/5] items-center justify-center rounded-[2rem] border border-gold/30 bg-cream/70 text-center">
               <div>
                 <p className="font-logo text-3xl tracking-[0.34em] text-honey">
-                  DEEBAJ
+                  D E E B A J
                 </p>
                 <p className="mt-4 text-sm uppercase tracking-[0.35em] text-ink-mute">
-                  Six layer tissue
+                  {isArabic ? 'ست طبقات حقيقية' : 'Six layer tissue'}
                 </p>
               </div>
             </div>
@@ -54,8 +59,12 @@ export default function HomePage({ params }: PageProps) {
       <Container>
         <Section
           eyebrow="Featured products"
-          title="A focused foundation for the collection"
-          description="Product presentation is intentionally simple in Phase 1. Full product storytelling, imagery, and commerce interactions will follow in later phases."
+          title={isArabic ? 'لكل استخدام... مستوى مختلف' : 'A refined softness for every need'}
+          description={
+            isArabic
+              ? 'عرض بسيط وهادئ للمنتجات في المرحلة الأولى، مع الحفاظ على هوية ديباج البنية الذهبية ومساحة كافية لتجربة أكثر فخامة لاحقًا.'
+              : 'A calm Phase 1 product presentation that preserves Deebaj Royal’s brown-honey identity while preparing for richer storytelling later.'
+          }
         >
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {featuredProducts.map((product) => (

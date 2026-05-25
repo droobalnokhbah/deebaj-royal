@@ -8,12 +8,18 @@ type PageProps = {
 };
 
 export default function ShopPage({ params }: PageProps) {
+  const isArabic = params.locale === 'ar';
+
   return (
     <Container>
       <Section
-        eyebrow="Shop"
-        title="The Deebaj Royal collection"
-        description="A minimal product listing for Phase 1. Filtering, sorting, cart actions, and merchandising logic will be added after the foundation is stable."
+        eyebrow={isArabic ? 'المنتجات' : 'Shop'}
+        title={isArabic ? 'مجموعة ديباج رويال' : 'The Deebaj Royal collection'}
+        description={
+          isArabic
+            ? 'تصنيف هادئ وواضح للمنتجات، بعيد عن الازدحام والعروض الصاخبة، ليبقى التركيز على الجودة والملمس والتجربة.'
+            : 'A calm product listing that avoids clutter and keeps the focus on quality, texture, and experience.'
+        }
       >
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {PRODUCTS.map((product) => (
