@@ -1,6 +1,6 @@
 // ════════════════════════════════════════════
 // Firebase Client Initialization
-// File: src/lib/firebase/client.ts
+// File: src/lib/firebase-client.ts
 // ════════════════════════════════════════════
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
@@ -73,7 +73,7 @@ export interface Order {
 // Usage example in a component:
 // ════════════════════════════════════════════
 /*
-import { db } from '@/lib/firebase/client';
+import { db } from '@/lib/firebase-client';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
 
 // Save order
