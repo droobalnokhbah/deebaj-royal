@@ -1,0 +1,102 @@
+// ════════════════════════════════════════════
+// Firebase Client Initialization
+// File: src/lib/firebase/client.ts
+// ════════════════════════════════════════════
+import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
+import { getFirestore, Firestore } from 'firebase/firestore';
+import { getAuth, Auth } from 'firebase/auth';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
+import { getAnalytics, Analytics, isSupported } from 'firebase/analytics';
+
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+};
+
+let app: FirebaseApp;
+let db: Firestore;
+let auth: Auth;
+let storage: FirebaseStorage;
+let analytics: Analytics | null = null;
+
+if (typeof window !== 'undefined') {
+  app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+  db = getFirestore(app);
+  auth = getAuth(app);
+  storage = getStorage(app);
+  
+  // Initialize Analytics only in browser
+  isSupported().then((supported) => {
+    if (supported) analytics = getAnalytics(app);
+  });
+}
+
+export { app, db, auth, storage, analytics };
+
+// ════════════════════════════════════════════
+// Order interface
+// ════════════════════════════════════════════
+export interface Order {
+  orderId: string;
+  customer: {
+    name: string;
+    phone: string;
+    email?: string;
+    city: string;
+    address: string;
+  };
+  items: Array<{
+    productId: number;
+    nameAr: string;
+    nameEn: string;
+    price: number;
+    quantity: number;
+  }>;
+  subtotal: number;
+  shipping: number;
+  total: number;
+  paymentMethod: 'mada' | 'visa' | 'apple' | 'stc' | 'tabby' | 'tamara' | 'cod' | 'bank';
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
+  orderStatus: 'new' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  createdAt: string;
+  updatedAt?: string;
+  notes?: string;
+  trackingNumber?: string;
+}
+
+// ════════════════════════════════════════════
+// Usage example in a component:
+// ════════════════════════════════════════════
+/*
+import { db } from '@/lib/firebase/client';
+import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+
+// Save order
+const saveOrder = async (order: Order) => {
+  try {
+    const docRef = await addDoc(collection(db, 'orders'), {
+      ...order,
+      createdAt: new Date().toISOString(),
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error('Error saving order:', error);
+    throw error;
+  }
+};
+
+// Get user orders
+const getUserOrders = async (phone: string) => {
+  const q = query(
+    collection(db, 'orders'),
+    where('customer.phone', '==', phone)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+*/
