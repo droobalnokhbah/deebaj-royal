@@ -1,4 +1,5 @@
 import { ProductCard } from '@/components/commerce/ProductCard';
+import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -31,8 +32,8 @@ export default function HomePage({ params }: PageProps) {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-gold/15 bg-cream">
-        <div className="absolute inset-x-0 top-0 h-48 bg-[#f8efd9]" />
+      <section className="relative overflow-hidden border-b border-champagne/60 bg-cream">
+        <div className="absolute inset-x-0 top-0 h-56 bg-champagne-pale" />
         <Container className="relative grid min-h-[82vh] items-center gap-14 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
           <div className="max-w-3xl">
             <p className="mb-8 text-xs font-semibold uppercase tracking-[0.34em] text-honey">
@@ -57,26 +58,17 @@ export default function HomePage({ params }: PageProps) {
           </div>
 
           <div className="mx-auto w-full max-w-xl">
-            <div className="rounded-[3rem] border border-gold/25 bg-[#f7ecd1] p-5 shadow-[0_40px_100px_rgba(61,38,20,0.12)] sm:p-7">
-              <div className="flex aspect-[4/5] items-center justify-center rounded-[2.5rem] border border-gold/25 bg-cream/80 text-center">
-                <div>
-                  <div className="mx-auto mb-10 h-12 w-20 border-x border-t border-gold/60" />
-                  <p className="font-logo text-4xl tracking-[0.38em] text-honey">
-                    D E E B A J
-                  </p>
-                  <div className="mx-auto my-7 h-px w-32 bg-gold/60" />
-                  <p className="text-sm uppercase tracking-[0.35em] text-ink-mute">
-                    {isArabic ? 'نعومة القطن بلمسة الحرير' : 'Softness you remember'}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <SignaturePackage
+              eyebrow="D E E B A J"
+              title="R O Y A L"
+              subtitle={isArabic ? 'نعومة القطن بلمسة الحرير' : 'Softness you remember'}
+            />
           </div>
         </Container>
       </section>
 
-      <section className="border-b border-gold/10 bg-honey-deep text-cream">
-        <Container className="grid gap-4 py-6 text-center text-sm text-cream/85 md:grid-cols-3">
+      <section className="border-b border-champagne/50 bg-champagne-pale text-ink-soft">
+        <Container className="grid gap-4 py-7 text-center text-sm md:grid-cols-3">
           {trustSignals.map((signal) => (
             <p key={signal}>{signal}</p>
           ))}
@@ -97,7 +89,7 @@ export default function HomePage({ params }: PageProps) {
             {rituals.map(([number, title, description]) => (
               <article
                 key={number}
-                className="rounded-[2.5rem] border border-gold/15 bg-cream-soft p-8 shadow-[0_20px_60px_rgba(61,38,20,0.05)]"
+                className="rounded-[2.5rem] border border-champagne/50 bg-cream p-8 shadow-[0_20px_60px_rgba(51,38,28,0.045)]"
               >
                 <p className="font-serif text-5xl text-gold">{number}</p>
                 <h2 className="mt-8 font-serif text-3xl font-medium text-ink">{title}</h2>
@@ -108,7 +100,7 @@ export default function HomePage({ params }: PageProps) {
         </Section>
       </Container>
 
-      <section className="bg-[#fbf5e8]">
+      <section className="bg-champagne-pale">
         <Container>
           <Section
             eyebrow={isArabic ? 'المجموعة' : 'The collection'}
@@ -131,18 +123,12 @@ export default function HomePage({ params }: PageProps) {
       <Container>
         <Section className="lg:py-36">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div className="rounded-[3rem] border border-gold/20 bg-honey-deep p-8 text-cream shadow-[0_30px_90px_rgba(61,38,20,0.12)] sm:p-10">
-              <div className="flex aspect-[4/5] items-center justify-center rounded-[2.25rem] border border-gold/30 bg-[#4a2f13]/35 text-center">
-                <div>
-                  <p className="font-logo text-3xl tracking-[0.38em] text-gold-light">
-                    D E E B A J
-                  </p>
-                  <p className="mt-5 text-xs uppercase tracking-[0.35em] text-cream/70">
-                    Royal Honey Edition
-                  </p>
-                </div>
-              </div>
-            </div>
+            <SignaturePackage
+              eyebrow="D E E B A J"
+              title="ROYAL HONEY"
+              subtitle={isArabic ? 'واجهة هادئة، حضور لا يُنسى' : 'Quiet front face, memorable presence'}
+              tone="caramel"
+            />
             <div>
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-honey">
                 {isArabic ? 'التغليف الفاخر' : 'Luxury packaging'}
@@ -162,7 +148,7 @@ export default function HomePage({ params }: PageProps) {
         </Section>
       </Container>
 
-      <section className="bg-[#f8efd9]">
+      <section className="bg-cream-warm">
         <Container>
           <Section
             eyebrow={isArabic ? 'للضيافة والمنازل الراقية' : 'For hospitality and refined homes'}
@@ -180,7 +166,7 @@ export default function HomePage({ params }: PageProps) {
               ).map((item) => (
                 <div
                   key={item}
-                  className="rounded-[2rem] border border-honey/15 bg-cream/70 p-7 text-center text-sm font-semibold text-ink shadow-[0_14px_40px_rgba(61,38,20,0.05)]"
+                  className="rounded-[2rem] border border-champagne-warm/40 bg-cream/70 p-7 text-center text-sm font-semibold text-ink shadow-[0_14px_40px_rgba(51,38,28,0.04)]"
                 >
                   {item}
                 </div>

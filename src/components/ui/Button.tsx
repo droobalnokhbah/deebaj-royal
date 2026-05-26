@@ -10,9 +10,9 @@ type ButtonProps = {
 };
 
 const variantClasses = {
-  primary: 'bg-honey-deep text-cream shadow-[0_18px_40px_rgba(92,62,16,0.18)] hover:bg-ink',
+  primary: 'bg-caramel-deep text-cream shadow-[0_18px_45px_rgba(51,38,28,0.13)] hover:bg-ink',
   secondary:
-    'border border-honey/25 bg-cream/80 text-ink shadow-[0_12px_30px_rgba(92,62,16,0.06)] hover:border-honey hover:bg-cream-soft',
+    'border border-champagne-warm/40 bg-cream/80 text-ink shadow-[0_12px_30px_rgba(51,38,28,0.045)] hover:border-honey hover:bg-champagne-pale',
   ghost: 'text-ink hover:text-honey',
 };
 

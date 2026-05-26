@@ -22,9 +22,9 @@ export function Header({ locale }: HeaderProps) {
   const isArabic = locale === 'ar';
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gold/20 bg-cream/90 backdrop-blur-xl">
-      <div className="border-b border-gold/10 bg-honey-deep text-cream">
-        <Container className="flex min-h-9 items-center justify-center text-center text-[11px] font-medium tracking-[0.12em] text-cream/90">
+    <header className="sticky top-0 z-40 border-b border-champagne/60 bg-cream/95 backdrop-blur-xl">
+      <div className="border-b border-champagne/50 bg-champagne-pale text-ink-soft">
+        <Container className="flex min-h-9 items-center justify-center text-center text-[11px] font-medium tracking-[0.12em]">
           <span>
             {isArabic
               ? 'شحن مجاني فوق ٢٠٠ ريال · ضمان رضا ١٤ يوم · تجربة سعودية فاخرة'
@@ -60,7 +60,7 @@ export function Header({ locale }: HeaderProps) {
         <div className="flex items-center gap-3">
           <Link
             href={localizedPath(locale, '/checkout')}
-            className="hidden rounded-full border border-honey/30 px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-honey hover:bg-cream-soft sm:inline-flex"
+            className="hidden rounded-full border border-champagne-warm/40 px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-honey hover:bg-champagne-pale sm:inline-flex"
           >
             {isArabic ? 'السلة' : 'Cart'}
           </Link>

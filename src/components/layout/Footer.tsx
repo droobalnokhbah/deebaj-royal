@@ -21,7 +21,7 @@ export function Footer({ locale }: FooterProps) {
   const isArabic = locale === 'ar';
 
   return (
-    <footer className="border-t border-gold/20 bg-[#f8efd9]">
+    <footer className="border-t border-champagne/60 bg-champagne-pale">
       <Container className="grid gap-12 py-14 sm:grid-cols-[1.2fr_1fr] lg:py-20">
         <div>
           <p className="font-logo text-lg tracking-[0.32em] text-ink">
@@ -33,13 +33,13 @@ export function Footer({ locale }: FooterProps) {
               : 'Luxury everyday care for refined homes, hospitality spaces, and premium gifting moments across Saudi Arabia and the GCC.'}
           </p>
           <div className="mt-8 grid max-w-lg gap-3 text-sm text-ink-soft sm:grid-cols-3">
-            <span className="rounded-full border border-honey/20 px-4 py-2 text-center">
+            <span className="rounded-full border border-champagne-warm/40 px-4 py-2 text-center">
               {isArabic ? 'شحن موثوق' : 'Trusted delivery'}
             </span>
-            <span className="rounded-full border border-honey/20 px-4 py-2 text-center">
+            <span className="rounded-full border border-champagne-warm/40 px-4 py-2 text-center">
               {isArabic ? 'ضمان رضا' : 'Satisfaction guarantee'}
             </span>
-            <span className="rounded-full border border-honey/20 px-4 py-2 text-center">
+            <span className="rounded-full border border-champagne-warm/40 px-4 py-2 text-center">
               {isArabic ? 'جودة سعودية' : 'Saudi quality'}
             </span>
           </div>

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { ProductCard } from '@/components/commerce/ProductCard';
+import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -65,20 +66,12 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Container>
         <Section>
           <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-            <div className="rounded-[3rem] border border-gold/20 bg-[#f7ecd1] p-5 shadow-[0_36px_100px_rgba(61,38,20,0.1)] sm:p-8">
-              <div className="flex aspect-square items-center justify-center rounded-[2.5rem] border border-gold/25 bg-cream/75 text-center shadow-inner">
-                <div>
-                  <div className="mx-auto mb-10 h-12 w-20 border-x border-t border-gold/60" />
-                  <p className="font-logo text-4xl tracking-[0.38em] text-honey">
-                    D E E B A J
-                  </p>
-                  <div className="mx-auto my-7 h-px w-32 bg-gold/60" />
-                  <p className="text-xs uppercase tracking-[0.35em] text-ink-mute">
-                    {tag}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <SignaturePackage
+              eyebrow="D E E B A J"
+              title={tag}
+              subtitle={name}
+              tone={product.category === 'gold' ? 'caramel' : 'ivory'}
+            />
 
             <div className="lg:sticky lg:top-36">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-honey">
@@ -94,14 +87,14 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <p className="text-sm text-ink-mute">
                   {isArabic ? 'السعر شامل الضريبة' : 'VAT included'}
                 </p>
-                <p className="font-serif text-4xl font-medium text-honey">
+                <p className="font-serif text-4xl font-medium text-caramel">
                   {product.price} {isArabic ? 'ريال' : 'SAR'}
                 </p>
               </div>
 
               <div className="mt-8 grid gap-3 text-sm text-ink-soft sm:grid-cols-2">
                 {features.map((feature) => (
-                  <div key={feature} className="rounded-2xl border border-honey/15 bg-cream-soft px-4 py-4">
+                  <div key={feature} className="rounded-2xl border border-champagne-warm/40 bg-champagne-pale px-4 py-4">
                     {feature}
                   </div>
                 ))}
@@ -125,7 +118,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         </Section>
       </Container>
 
-      <section className="bg-[#fbf5e8]">
+      <section className="bg-champagne-pale">
         <Container>
           <Section
             eyebrow={isArabic ? 'قصة المنتج' : 'Product story'}
@@ -149,7 +142,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     ['Presence', 'Quiet packaging that complements the room rather than competing with it.'],
                   ]
               ).map(([title, copy]) => (
-                <article key={title} className="rounded-[2.5rem] border border-gold/15 bg-cream p-8">
+                <article key={title} className="rounded-[2.5rem] border border-champagne/60 bg-cream p-8">
                   <h2 className="font-serif text-3xl font-medium text-ink">{title}</h2>
                   <p className="mt-4 text-sm leading-8 text-ink-soft">{copy}</p>
                 </article>
@@ -165,7 +158,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           title={isArabic ? 'واضح في التفاصيل، هادئ في العرض.' : 'Clear in detail, quiet in presentation.'}
         >
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-            <div className="rounded-[2.5rem] border border-honey/15 bg-cream-soft p-8">
+            <div className="rounded-[2.5rem] border border-champagne-warm/40 bg-champagne-pale p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
                 {isArabic ? 'المواصفات' : 'Specifications'}
               </p>
@@ -185,13 +178,13 @@ export default function ProductPage({ params }: ProductPageProps) {
               </dl>
             </div>
 
-            <div className="rounded-[2.5rem] border border-gold/15 bg-cream p-8">
+            <div className="rounded-[2.5rem] border border-champagne/60 bg-cream p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
                 {isArabic ? 'مناسب لـ' : 'Usage occasions'}
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {occasions.map((occasion) => (
-                  <div key={occasion} className="rounded-2xl border border-honey/10 bg-[#fbf5e8] px-5 py-5 text-sm text-ink-soft">
+                  <div key={occasion} className="rounded-2xl border border-champagne-warm/30 bg-champagne-pale px-5 py-5 text-sm text-ink-soft">
                     {occasion}
                   </div>
                 ))}
@@ -201,7 +194,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         </Section>
       </Container>
 
-      <section className="bg-honey-deep text-cream">
+      <section className="bg-caramel-deep text-cream">
         <Container>
           <Section
             eyebrow={isArabic ? 'القيمة والتغليف' : 'Packaging and value'}
@@ -215,7 +208,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           >
             <div className="grid gap-4 md:grid-cols-3">
               {(isArabic ? ['ملمس فاخر', 'تغليف أنيق', 'حضور هادئ'] : ['Premium texture', 'Elegant packaging', 'Quiet presence']).map((item) => (
-                <div key={item} className="rounded-[2rem] border border-gold/25 bg-cream/5 px-6 py-6 text-center text-sm font-semibold text-cream">
+                <div key={item} className="rounded-[2rem] border border-champagne/25 bg-cream/5 px-6 py-6 text-center text-sm font-semibold text-cream">
                   {item}
                 </div>
               ))}
@@ -231,7 +224,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         >
           <div className="grid gap-5 md:grid-cols-3">
             {reviewQuotes.map((quote) => (
-              <figure key={quote} className="rounded-[2.25rem] border border-gold/15 bg-cream p-7 shadow-[0_18px_60px_rgba(61,38,20,0.05)]">
+              <figure key={quote} className="rounded-[2.25rem] border border-champagne/60 bg-cream p-7 shadow-[0_18px_60px_rgba(51,38,28,0.04)]">
                 <div className="text-gold">★★★★★</div>
                 <blockquote className="mt-5 text-sm leading-8 text-ink-soft">
                   "{quote}"

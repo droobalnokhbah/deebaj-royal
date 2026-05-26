@@ -1,4 +1,5 @@
 import { ProductCard } from '@/components/commerce/ProductCard';
+import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -39,7 +40,7 @@ export default function ShopPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="border-b border-gold/15 bg-[#fbf5e8]">
+      <section className="border-b border-champagne/60 bg-champagne-pale">
         <Container className="grid gap-12 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-32">
           <div className="max-w-3xl">
             <p className="mb-7 text-xs font-semibold uppercase tracking-[0.34em] text-honey">
@@ -57,19 +58,11 @@ export default function ShopPage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="rounded-[3rem] border border-gold/20 bg-cream p-7 shadow-[0_30px_90px_rgba(61,38,20,0.08)]">
-            <div className="flex min-h-[22rem] items-center justify-center rounded-[2.25rem] border border-gold/20 bg-honey-deep text-center text-cream">
-              <div>
-                <p className="font-logo text-3xl tracking-[0.38em] text-gold-light">
-                  D E E B A J
-                </p>
-                <div className="mx-auto my-7 h-px w-32 bg-gold/60" />
-                <p className="text-sm uppercase tracking-[0.32em] text-cream/75">
-                  {isArabic ? 'مجموعة العناية الفاخرة' : 'Luxury care collection'}
-                </p>
-              </div>
-            </div>
-          </div>
+          <SignaturePackage
+            eyebrow="D E E B A J"
+            title={isArabic ? 'المجموعة' : 'COLLECTION'}
+            subtitle={isArabic ? 'نفس منطق الفئة، بحضور أكثر فخامة' : 'Familiar category logic, elevated presence'}
+          />
         </Container>
       </section>
 
@@ -87,7 +80,7 @@ export default function ShopPage({ params }: PageProps) {
             {categoryLabels.map((category) => (
               <span
                 key={category.key}
-                className="rounded-full border border-honey/20 bg-cream px-5 py-3 text-sm font-medium text-ink-soft"
+                className="rounded-full border border-champagne-warm/40 bg-cream px-5 py-3 text-sm font-medium text-ink-soft"
               >
                 {category.label}
                 <span className="mx-2 text-honey">{category.count}</span>
@@ -105,10 +98,10 @@ export default function ShopPage({ params }: PageProps) {
         </Section>
       </Container>
 
-      <section className="bg-honey-deep text-cream">
-        <Container className="grid gap-4 py-8 text-sm text-cream/85 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="bg-cream-warm text-ink-soft">
+        <Container className="grid gap-4 py-8 text-sm sm:grid-cols-2 lg:grid-cols-4">
           {trustItems.map((item) => (
-            <div key={item} className="rounded-full border border-gold/20 px-5 py-3 text-center">
+            <div key={item} className="rounded-full border border-champagne-warm/40 bg-cream/60 px-5 py-3 text-center">
               {item}
             </div>
           ))}

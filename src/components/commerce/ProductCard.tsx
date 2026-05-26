@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import type { Product } from '@/data/products';
 import { Button } from '@/components/ui/Button';
 
@@ -15,37 +16,34 @@ export function ProductCard({ product, locale }: ProductCardProps) {
   const href = `/${locale}/product/${product.slug}`;
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[2.25rem] border border-gold/15 bg-cream shadow-[0_24px_70px_rgba(61,38,20,0.07)] transition-colors hover:border-gold/50">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[2.5rem] border border-champagne/50 bg-cream shadow-[0_26px_80px_rgba(51,38,28,0.055)] transition-colors hover:border-gold/60">
       <Link href={href} className="block">
-        <div className="flex aspect-[4/3] items-center justify-center bg-[#f7ecd1] p-6">
-          <div className="flex h-full w-full items-center justify-center rounded-[1.75rem] border border-gold/25 bg-cream/75 text-center shadow-inner">
-            <div>
-              <p className="font-logo text-xl tracking-[0.34em] text-honey">D E E B A J</p>
-              <div className="mx-auto my-4 h-px w-20 bg-gold/50" />
-              <p className="text-xs uppercase tracking-[0.32em] text-ink-mute">
-              {tag}
-              </p>
-            </div>
-          </div>
+        <div className="bg-champagne-pale p-5">
+          <SignaturePackage
+            eyebrow="D E E B A J"
+            title={tag}
+            tone={product.category === 'gold' ? 'caramel' : 'ivory'}
+            size="small"
+          />
         </div>
       </Link>
 
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
-        <div className="grid gap-4">
+      <div className="flex flex-1 flex-col p-7 sm:p-8">
+        <div className="grid gap-5">
           <div>
             <h3 className="font-serif text-2xl font-medium text-ink">{name}</h3>
-            <p className="mt-3 text-sm leading-7 text-ink-soft">{description}</p>
+            <p className="mt-4 text-sm leading-8 text-ink-soft">{description}</p>
           </div>
           <p className="text-sm font-semibold text-honey">
             {product.price} {isArabic ? 'ريال' : 'SAR'}
           </p>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-2 text-xs text-ink-mute">
-          <span className="rounded-full bg-cream-soft px-3 py-1">
+        <div className="mt-7 flex flex-wrap gap-2 text-xs text-ink-mute">
+          <span className="rounded-full bg-champagne-pale px-3 py-1">
             {isArabic ? `${product.specs.layers} طبقات` : `${product.specs.layers} layers`}
           </span>
-          <span className="rounded-full bg-cream-soft px-3 py-1">
+          <span className="rounded-full bg-champagne-pale px-3 py-1">
             {isArabic ? `${product.specs.sheets} منديل` : `${product.specs.sheets} sheets`}
           </span>
         </div>
