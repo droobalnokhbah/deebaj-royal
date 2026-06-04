@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { ProductCard } from '@/components/commerce/ProductCard';
 import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
@@ -34,6 +35,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const tag = isArabic ? product.tagAr : product.tagEn;
   const description = isArabic ? product.descAr : product.descEn;
   const features = isArabic ? product.features.ar : product.features.en;
+  const heroImage = product.images[0];
   const relatedProducts = PRODUCTS.filter((item) => item.slug !== product.slug)
     .filter((item) => item.category === product.category || item.isFeatured)
     .slice(0, 3);
@@ -66,12 +68,27 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Container>
         <Section>
           <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-            <SignaturePackage
-              eyebrow="D E E B A J"
-              title={tag}
-              subtitle={name}
-              tone={product.category === 'gold' ? 'caramel' : 'ivory'}
-            />
+            {heroImage ? (
+              <div className="rounded-[3rem] border border-champagne/50 bg-champagne-pale p-5 shadow-[0_42px_110px_rgba(51,38,28,0.11)] sm:p-7">
+                <div className="relative aspect-square overflow-hidden rounded-[2.35rem] border border-champagne-warm/40 bg-cream">
+                  <Image
+                    src={heroImage}
+                    alt={name}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 52vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            ) : (
+              <SignaturePackage
+                eyebrow="D E E B A J"
+                title={tag}
+                subtitle={name}
+                tone={product.category === 'gold' ? 'caramel' : 'ivory'}
+              />
+            )}
 
             <div className="lg:sticky lg:top-36">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-honey">

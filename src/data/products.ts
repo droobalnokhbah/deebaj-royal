@@ -58,7 +58,10 @@ export const PRODUCTS: Product[] = [
       ],
     },
     specs: { layers: 6, sheets: 150 },
-    images: ['/images/products/deebaj-classic.jpg'],
+    images: [
+      '/images/products/deebaj-classic.jpg',
+      '/images/products/deebaj-classic-both.jpg',
+    ],
     inStock: true,
     isFeatured: true,
   },
