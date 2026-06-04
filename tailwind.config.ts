@@ -8,68 +8,78 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Deebaj Royal Brand Colors (Brown Honey)
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       colors: {
         // Backgrounds
         cream: {
-          DEFAULT: '#FCF8EE',
-          soft: '#F7EFD5',
-          warm: '#FAF4E2',
+          DEFAULT: '#FBF7EF',
+          soft: '#F4E9D8',
+          warm: '#EFE1C8',
         },
-        // Brand Primary (Brown Honey)
+        // Brand Primary (Luxury Honey Beige)
         honey: {
-          DEFAULT: '#906820',
-          dark: '#7A5818',
-          deep: '#5C3E10',
-          mute: '#A07830',
+          DEFAULT: '#B58A56',
+          dark: '#9C7548',
+          deep: '#6E4A2E',
+          mute: '#C3A173',
         },
-        // Brand Accent (Gold)
+        caramel: {
+          DEFAULT: '#A97B4F',
+          soft: '#C69D6B',
+          deep: '#7A5437',
+        },
+        // Brand Accent (Muted Champagne Gold)
         gold: {
-          DEFAULT: '#C9A368',
-          deep: '#A8854E',
-          light: '#E5C896',
-          pale: '#F0DEB0',
+          DEFAULT: '#CBB88A',
+          deep: '#A9915B',
+          light: '#E2D0A5',
+          pale: '#F3E8CE',
+        },
+        champagne: {
+          DEFAULT: '#E9D9B7',
+          pale: '#F7EEDB',
+          warm: '#D7BC82',
         },
         // Text
         ink: {
-          DEFAULT: '#3D2614',
-          soft: '#6B4720',
-          mute: '#9B7E5F',
+          DEFAULT: '#33261C',
+          soft: '#6E5643',
+          mute: '#9A8268',
         },
         // Neutrals
         sand: {
-          100: '#F0EAD8',
-          200: '#E5DCC4',
-          300: '#C9BFA5',
-          500: '#A89578',
-          700: '#7A5818',
+          100: '#F3EBDC',
+          200: '#E7DAC4',
+          300: '#CDBB9F',
+          500: '#A58F70',
+          700: '#755439',
         },
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Typography
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       fontFamily: {
         // Arabic
-        arabic: ['"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+        arabic: ['var(--font-arabic)', 'system-ui', 'sans-serif'],
         // English Serif (luxury)
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
         // English Sans
-        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         // Logo
-        logo: ['Cinzel', 'serif'],
+        logo: ['var(--font-cinzel)', 'serif'],
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Spacing & Layout
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       maxWidth: {
         '8xl': '88rem',
         '9xl': '96rem',
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Animations
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       keyframes: {
         'fade-in': {
           '0%': { opacity: '0' },
@@ -84,14 +94,14 @@ const config: Config = {
         'fade-in': 'fade-in 0.6s ease-out',
         'slide-up': 'slide-up 0.8s ease-out',
       },
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       // Gradients
-      // ════════════════════════════════════════
+      // ╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝╝
       backgroundImage: {
         'honey-gradient':
-          'linear-gradient(135deg, #906820 0%, #7A5818 50%, #5C3E10 100%)',
+          'linear-gradient(135deg, #F7EEDB 0%, #E9D9B7 46%, #C69D6B 100%)',
         'gold-gradient':
-          'linear-gradient(135deg, #E5C896 0%, #C9A368 100%)',
+          'linear-gradient(135deg, #F3E8CE 0%, #CBB88A 100%)',
       },
     },
   },
