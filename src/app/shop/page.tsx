@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import { ProductCard } from '@/components/commerce/ProductCard';
-import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -47,11 +47,17 @@ export default function ShopPage() {
             </p>
           </div>
 
-          <SignaturePackage
-            eyebrow="D E E B A J"
-            title="المجموعة"
-            subtitle="نفس منطق الفئة، بحضور أكثر فخامة"
-          />
+          <div className="rounded-[3rem] border border-champagne/60 bg-cream p-4 shadow-[0_34px_90px_rgba(51,38,28,0.1)] sm:p-6">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-[2.35rem] border border-champagne-warm/40 bg-cream">
+              <Image
+                src="/images/products/deebaj-family.jpg"
+                alt="مجموعة ديباج رويال"
+                fill
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
         </Container>
       </section>
 

@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import { ProductCard } from '@/components/commerce/ProductCard';
-import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -19,13 +19,13 @@ export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-champagne/60 bg-cream">
-        <div className="absolute inset-x-0 top-0 h-56 bg-champagne-pale" />
-        <Container className="relative grid min-h-[82vh] items-center gap-14 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+        <div className="absolute inset-x-0 top-0 h-64 bg-champagne-pale" />
+        <Container className="relative grid min-h-[78vh] items-center gap-10 py-16 sm:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
           <div className="max-w-3xl">
             <p className="mb-8 text-xs font-semibold uppercase tracking-[0.34em] text-honey">
               ديباج رويال
             </p>
-            <h1 className="font-serif text-6xl font-medium leading-[0.98] text-ink sm:text-7xl lg:text-8xl">
+            <h1 className="font-serif text-5xl font-medium leading-[1.02] text-ink sm:text-6xl lg:text-7xl">
               رفاهية تشعر بها من أول لمسة.
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-9 text-ink-soft sm:text-xl sm:leading-10">
@@ -41,12 +41,19 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-xl">
-            <SignaturePackage
-              eyebrow="D E E B A J"
-              title="R O Y A L"
-              subtitle="نعومة القطن بلمسة الحرير"
-            />
+          <div className="mx-auto w-full max-w-2xl">
+            <div className="rounded-[3rem] border border-champagne/60 bg-champagne-pale p-4 shadow-[0_42px_110px_rgba(51,38,28,0.12)] sm:p-6">
+              <div className="relative aspect-[5/4] overflow-hidden rounded-[2.35rem] border border-champagne-warm/40 bg-cream">
+                <Image
+                  src="/images/products/deebaj-classic.jpg"
+                  alt="ديباج رويال كلاسيك"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 52vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
           </div>
         </Container>
       </section>
@@ -99,12 +106,17 @@ export default function HomePage() {
       <Container>
         <Section className="lg:py-36">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <SignaturePackage
-              eyebrow="D E E B A J"
-              title="ROYAL HONEY"
-              subtitle="واجهة هادئة، حضور لا يُنسى"
-              tone="caramel"
-            />
+            <div className="rounded-[3rem] border border-champagne/60 bg-champagne-pale p-4 shadow-[0_34px_90px_rgba(51,38,28,0.1)] sm:p-6">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[2.35rem] border border-champagne-warm/40 bg-cream">
+                <Image
+                  src="/images/products/deebaj-classic-both.jpg"
+                  alt="تغليف ديباج رويال الفاخر"
+                  fill
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
             <div>
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-honey">
                 التغليف الفاخر

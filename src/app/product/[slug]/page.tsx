@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { ProductCard } from '@/components/commerce/ProductCard';
-import { SignaturePackage } from '@/components/brand/SignaturePackage';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -27,7 +26,6 @@ export default function ProductPage({ params }: ProductPageProps) {
   }
 
   const name = product.nameAr;
-  const tag = product.tagAr;
   const description = product.descAr;
   const features = product.features.ar;
   const heroImage = product.images[0];
@@ -55,27 +53,18 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Container>
         <Section>
           <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-            {heroImage ? (
-              <div className="rounded-[3rem] border border-champagne/50 bg-champagne-pale p-5 shadow-[0_42px_110px_rgba(51,38,28,0.11)] sm:p-7">
-                <div className="relative aspect-square overflow-hidden rounded-[2.35rem] border border-champagne-warm/40 bg-cream">
-                  <Image
-                    src={heroImage}
-                    alt={name}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 52vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
+            <div className="rounded-[3rem] border border-champagne/50 bg-champagne-pale p-5 shadow-[0_42px_110px_rgba(51,38,28,0.11)] sm:p-7">
+              <div className="relative aspect-square overflow-hidden rounded-[2.35rem] border border-champagne-warm/40 bg-cream">
+                <Image
+                  src={heroImage}
+                  alt={name}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 52vw, 100vw"
+                  className="object-cover"
+                />
               </div>
-            ) : (
-              <SignaturePackage
-                eyebrow="D E E B A J"
-                title={tag}
-                subtitle={name}
-                tone={product.category === 'gold' ? 'caramel' : 'ivory'}
-              />
-            )}
+            </div>
 
             <div className="lg:sticky lg:top-36">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-honey">
