@@ -6,15 +6,13 @@ import { Button } from '@/components/ui/Button';
 
 type ProductCardProps = {
   product: Product;
-  locale: string;
 };
 
-export function ProductCard({ product, locale }: ProductCardProps) {
-  const isArabic = locale === 'ar';
-  const name = isArabic ? product.nameAr : product.nameEn;
-  const tag = isArabic ? product.tagAr : product.tagEn;
-  const description = isArabic ? product.descAr : product.descEn;
-  const href = `/${locale}/product/${product.slug}`;
+export function ProductCard({ product }: ProductCardProps) {
+  const name = product.nameAr;
+  const tag = product.tagAr;
+  const description = product.descAr;
+  const href = `/product/${product.slug}`;
   const image = product.images[0];
 
   return (
@@ -49,21 +47,21 @@ export function ProductCard({ product, locale }: ProductCardProps) {
             <p className="mt-4 text-sm leading-8 text-ink-soft">{description}</p>
           </div>
           <p className="text-sm font-semibold text-honey">
-            {product.price} {isArabic ? 'ريال' : 'SAR'}
+            {product.price} ريال
           </p>
         </div>
 
         <div className="mt-7 flex flex-wrap gap-2 text-xs text-ink-mute">
           <span className="rounded-full bg-champagne-pale px-3 py-1">
-            {isArabic ? `${product.specs.layers} طبقات` : `${product.specs.layers} layers`}
+            {product.specs.layers} طبقات
           </span>
           <span className="rounded-full bg-champagne-pale px-3 py-1">
-            {isArabic ? `${product.specs.sheets} منديل` : `${product.specs.sheets} sheets`}
+            {product.specs.sheets} منديل
           </span>
         </div>
 
         <Button href={href} variant="secondary" className="mt-8 w-full">
-          {isArabic ? 'عرض المنتج' : 'View product'}
+          عرض المنتج
         </Button>
       </div>
     </article>

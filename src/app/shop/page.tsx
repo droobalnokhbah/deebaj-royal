@@ -5,38 +5,31 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { PRODUCTS } from '@/data/products';
 
-type PageProps = {
-  params: { locale: string };
-};
-
-export default function ShopPage({ params }: PageProps) {
-  const isArabic = params.locale === 'ar';
+export default function ShopPage() {
   const categoryLabels = [
     {
       key: 'classic',
-      label: isArabic ? 'اليومي الراقي' : 'Refined daily care',
+      label: 'اليومي الراقي',
       count: PRODUCTS.filter((product) => product.category === 'classic').length,
     },
     {
       key: 'premium',
-      label: isArabic ? 'الضيافة المسائية' : 'Evening hospitality',
+      label: 'الضيافة المسائية',
       count: PRODUCTS.filter((product) => product.category === 'premium').length,
     },
     {
       key: 'gold',
-      label: isArabic ? 'إصدار الهدايا' : 'Gifting edition',
+      label: 'إصدار الهدايا',
       count: PRODUCTS.filter((product) => product.category === 'gold').length,
     },
     {
       key: 'travel',
-      label: isArabic ? 'للتنقل' : 'On the go',
+      label: 'للتنقل',
       count: PRODUCTS.filter((product) => product.category === 'travel').length,
     },
   ];
 
-  const trustItems = isArabic
-    ? ['شحن موثوق داخل المملكة', 'خيارات دفع متعددة لاحقًا', 'ست طبقات حقيقية', 'تغليف يليق بالضيافة']
-    : ['Trusted Saudi delivery', 'Multiple payment options later', 'Six genuine layers', 'Hospitality-grade packaging'];
+  const trustItems = ['شحن موثوق داخل المملكة', 'خيارات دفع متعددة لاحقًا', 'ست طبقات حقيقية', 'تغليف يليق بالضيافة'];
 
   return (
     <>
@@ -44,37 +37,29 @@ export default function ShopPage({ params }: PageProps) {
         <Container className="grid gap-12 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-32">
           <div className="max-w-3xl">
             <p className="mb-7 text-xs font-semibold uppercase tracking-[0.34em] text-honey">
-              {isArabic ? 'مجموعة ديباج رويال' : 'Deebaj Royal collection'}
+              مجموعة ديباج رويال
             </p>
             <h1 className="font-serif text-5xl font-medium leading-[1.02] text-ink sm:text-6xl lg:text-7xl">
-              {isArabic
-                ? 'اكتشف النعومة كما تُقدّم في الضيافة الراقية.'
-                : 'Discover softness, presented like refined hospitality.'}
+              اكتشف النعومة كما تُقدّم في الضيافة الراقية.
             </h1>
             <p className="mt-7 text-lg leading-9 text-ink-soft sm:text-xl sm:leading-10">
-              {isArabic
-                ? 'تجربة تسوق هادئة، بلا ازدحام أو خصومات صاخبة. اختر المنتج بحسب اللحظة: المنزل، الضيافة، المكتب، السفر، أو الهدايا.'
-                : 'A calm shopping experience without clutter or loud discounts. Choose by moment: home, hospitality, office, travel, or gifting.'}
+              تجربة تسوق هادئة، بلا ازدحام أو خصومات صاخبة. اختر المنتج بحسب اللحظة: المنزل، الضيافة، المكتب، السفر، أو الهدايا.
             </p>
           </div>
 
           <SignaturePackage
             eyebrow="D E E B A J"
-            title={isArabic ? 'المجموعة' : 'COLLECTION'}
-            subtitle={isArabic ? 'نفس منطق الفئة، بحضور أكثر فخامة' : 'Familiar category logic, elevated presence'}
+            title="المجموعة"
+            subtitle="نفس منطق الفئة، بحضور أكثر فخامة"
           />
         </Container>
       </section>
 
       <Container>
         <Section
-          eyebrow={isArabic ? 'تصنيف هادئ' : 'Quiet discovery'}
-          title={isArabic ? 'اختر بحسب الاستخدام، لا بحسب الضجيج.' : 'Choose by use, not by noise.'}
-          description={
-            isArabic
-              ? 'بدل بطاقات مزدحمة وعروض متداخلة، يركّز المتجر على وضوح الاستخدام، جودة الملمس، وحضور التغليف.'
-              : 'Instead of crowded cards and competing promos, the shop focuses on use, texture quality, and packaging presence.'
-          }
+          eyebrow="تصنيف هادئ"
+          title="اختر بحسب الاستخدام، لا بحسب الضجيج."
+          description="بدل بطاقات مزدحمة وعروض متداخلة، يركّز المتجر على وضوح الاستخدام، جودة الملمس، وحضور التغليف."
         >
           <div className="mb-12 flex flex-wrap gap-3">
             {categoryLabels.map((category) => (
@@ -91,7 +76,7 @@ export default function ShopPage({ params }: PageProps) {
           <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-4">
             {PRODUCTS.map((product) => (
               <div key={product.id}>
-                <ProductCard product={product} locale={params.locale} />
+                <ProductCard product={product} />
               </div>
             ))}
           </div>
@@ -111,15 +96,13 @@ export default function ShopPage({ params }: PageProps) {
       <Container>
         <section className="py-20 text-center sm:py-24">
           <p className="text-xs font-semibold uppercase tracking-[0.34em] text-honey">
-            {isArabic ? 'تحتاج مساعدة في الاختيار؟' : 'Need help choosing?'}
+            تحتاج مساعدة في الاختيار؟
           </p>
           <h2 className="mx-auto mt-5 max-w-3xl font-serif text-4xl font-medium leading-[1.08] text-ink sm:text-5xl">
-            {isArabic
-              ? 'ابدأ بالمنتج المناسب للمكان الذي تريد أن يترك انطباعًا.'
-              : 'Start with the product for the space that needs to leave an impression.'}
+            ابدأ بالمنتج المناسب للمكان الذي تريد أن يترك انطباعًا.
           </h2>
-          <Button href={`/${params.locale}/contact`} variant="secondary" className="mt-9">
-            {isArabic ? 'استشارة هادئة' : 'Ask for guidance'}
+          <Button href="/contact" variant="secondary" className="mt-9">
+            استشارة هادئة
           </Button>
         </section>
       </Container>

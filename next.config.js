@@ -43,6 +43,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/ar',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/ar/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
         source: '/home',
         destination: '/',
         permanent: true,

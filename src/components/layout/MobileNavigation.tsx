@@ -6,21 +6,14 @@ import { useState } from 'react';
 type NavItem = {
   href: string;
   label: string;
-  labelEn: string;
 };
 
 type MobileNavigationProps = {
-  locale: string;
   items: NavItem[];
 };
 
-function localizedPath(locale: string, href: string) {
-  return href === '/' ? `/${locale}` : `/${locale}${href}`;
-}
-
-export function MobileNavigation({ locale, items }: MobileNavigationProps) {
+export function MobileNavigation({ items }: MobileNavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const isArabic = locale === 'ar';
 
   return (
     <div className="lg:hidden">
@@ -31,7 +24,7 @@ export function MobileNavigation({ locale, items }: MobileNavigationProps) {
         onClick={() => setIsOpen((current) => !current)}
         className="rounded-full border border-honey/25 px-4 py-2 text-sm font-semibold text-ink"
       >
-        {isArabic ? 'القائمة' : 'Menu'}
+        القائمة
       </button>
 
       {isOpen && (
@@ -48,7 +41,7 @@ export function MobileNavigation({ locale, items }: MobileNavigationProps) {
               onClick={() => setIsOpen(false)}
               className="rounded-full bg-cream-soft px-3 py-1 text-sm text-ink"
             >
-              {isArabic ? 'إغلاق' : 'Close'}
+              إغلاق
             </button>
           </div>
 
@@ -56,11 +49,11 @@ export function MobileNavigation({ locale, items }: MobileNavigationProps) {
             {items.map((item) => (
               <Link
                 key={item.href}
-                href={localizedPath(locale, item.href)}
+                href={item.href}
                 onClick={() => setIsOpen(false)}
                 className="rounded-2xl px-4 py-4 text-base font-medium text-ink transition-colors hover:bg-cream-soft"
               >
-                {isArabic ? item.label : item.labelEn}
+                {item.label}
               </Link>
             ))}
           </nav>

@@ -1,6 +1,6 @@
 // ════════════════════════════════════════════
 // Root Layout — Next.js 14 App Router
-// File: src/app/[locale]/layout.tsx
+// File: src/app/layout.tsx
 // ════════════════════════════════════════════
 import type { Metadata, Viewport } from 'next';
 import {
@@ -43,7 +43,7 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 });
 
 // ════════════════════════════════════════════
-// SEO Metadata (next-intl ready)
+// SEO Metadata
 // ════════════════════════════════════════════
 export const metadata: Metadata = {
   metadataBase: new URL('https://deebajroyal.com'),
@@ -66,15 +66,10 @@ export const metadata: Metadata = {
   publisher: 'Droob Alnokhbah Est.',
   alternates: {
     canonical: 'https://deebajroyal.com',
-    languages: {
-      'ar-SA': '/',
-      'en-US': '/en',
-    },
   },
   openGraph: {
     type: 'website',
     locale: 'ar_SA',
-    alternateLocale: 'en_US',
     url: 'https://deebajroyal.com',
     title: 'ديباج رويال | نعومة القطن بلمسة الحرير',
     description: 'مناديل فاخرة بست طبقات حقيقية. علامة سعودية للعناية اليومية.',
@@ -176,17 +171,13 @@ const storeSchema = {
 // ════════════════════════════════════════════
 export default function RootLayout({
   children,
-  params: { locale = 'ar' },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
 }) {
-  const isRTL = locale === 'ar';
-
   return (
     <html
-      lang={locale}
-      dir={isRTL ? 'rtl' : 'ltr'}
+      lang="ar"
+      dir="rtl"
       className={`${cinzel.variable} ${cormorant.variable} ${inter.variable} ${ibmPlexArabic.variable}`}
     >
       <head>
@@ -200,9 +191,9 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-cream text-ink font-arabic antialiased">
-        <Header locale={locale} />
+        <Header />
         <main>{children}</main>
-        <Footer locale={locale} />
+        <Footer />
         
         {/* Analytics */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (

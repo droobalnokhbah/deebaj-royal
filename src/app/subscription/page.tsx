@@ -3,19 +3,13 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SUBSCRIPTION_PLANS } from '@/data/products';
 
-type PageProps = {
-  params: { locale: string };
-};
-
-export default function SubscriptionPage({ params }: PageProps) {
-  const isArabic = params.locale === 'ar';
-
+export default function SubscriptionPage() {
   return (
     <Container>
       <Section
-        eyebrow="Subscription"
-        title="Recurring luxury care, structured for a later commerce phase"
-        description="Subscription checkout is not active yet. Phase 1 only exposes the route and plan cards from the restored product data."
+        eyebrow="الاشتراكات"
+        title="عناية فاخرة متكررة، بهدوء ووضوح"
+        description="الدفع الخاص بالاشتراكات غير مفعّل بعد. تعرض هذه الصفحة الباقات فقط إلى حين ربط تجربة التجارة لاحقًا."
       >
         <div className="grid gap-6 lg:grid-cols-3">
           {SUBSCRIPTION_PLANS.map((plan) => (
@@ -24,21 +18,21 @@ export default function SubscriptionPage({ params }: PageProps) {
               className="rounded-[2rem] border border-sand-200 bg-cream p-6 sm:p-8"
             >
               <p className="text-sm font-semibold text-honey">
-                {isArabic ? plan.nameAr : plan.nameEn}
+                {plan.nameAr}
               </p>
               <p className="mt-5 font-serif text-5xl font-medium text-ink">
                 {plan.discount}%
               </p>
               <p className="mt-3 text-sm uppercase tracking-[0.22em] text-ink-mute">
-                off every order
+                خصم على كل طلب
               </p>
               <ul className="mt-8 grid gap-3 text-sm leading-7 text-ink-soft">
-                {(isArabic ? plan.features.ar : plan.features.en).map((feature) => (
+                {plan.features.ar.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
-              <Button href={`/${params.locale}/contact`} variant="secondary" className="mt-8 w-full">
-                Register interest
+              <Button href="/contact" variant="secondary" className="mt-8 w-full">
+                تسجيل الاهتمام
               </Button>
             </article>
           ))}

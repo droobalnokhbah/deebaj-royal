@@ -9,18 +9,14 @@ import { PRODUCTS, getProductBySlug } from '@/data/products';
 
 type ProductPageProps = {
   params: {
-    locale: string;
     slug: string;
   };
 };
 
 export function generateStaticParams() {
-  return ['ar', 'en'].flatMap((locale) =>
-    PRODUCTS.map((product) => ({
-      locale,
-      slug: product.slug,
-    })),
-  );
+  return PRODUCTS.map((product) => ({
+    slug: product.slug,
+  }));
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -30,38 +26,29 @@ export default function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const isArabic = params.locale === 'ar';
-  const name = isArabic ? product.nameAr : product.nameEn;
-  const tag = isArabic ? product.tagAr : product.tagEn;
-  const description = isArabic ? product.descAr : product.descEn;
-  const features = isArabic ? product.features.ar : product.features.en;
+  const name = product.nameAr;
+  const tag = product.tagAr;
+  const description = product.descAr;
+  const features = product.features.ar;
   const heroImage = product.images[0];
   const relatedProducts = PRODUCTS.filter((item) => item.slug !== product.slug)
     .filter((item) => item.category === product.category || item.isFeatured)
     .slice(0, 3);
   const categoryLabel = {
-    classic: isArabic ? 'الاستخدام اليومي الراقي' : 'Refined daily use',
-    premium: isArabic ? 'الضيافة الفاخرة' : 'Premium hospitality',
-    eco: isArabic ? 'اختيار مستدام' : 'Sustainable choice',
-    travel: isArabic ? 'للتنقل والسفر' : 'Travel and movement',
-    gold: isArabic ? 'إصدار الهدايا' : 'Gifting edition',
+    classic: 'الاستخدام اليومي الراقي',
+    premium: 'الضيافة الفاخرة',
+    eco: 'اختيار مستدام',
+    travel: 'للتنقل والسفر',
+    gold: 'إصدار الهدايا',
   }[product.category];
 
-  const occasions = isArabic
-    ? ['المجلس والضيافة', 'غرف النوم الهادئة', 'المكاتب الراقية', 'الهدايا اليومية']
-    : ['Majlis and hospitality', 'Quiet bedrooms', 'Refined offices', 'Everyday gifting'];
+  const occasions = ['المجلس والضيافة', 'غرف النوم الهادئة', 'المكاتب الراقية', 'الهدايا اليومية'];
 
-  const reviewQuotes = isArabic
-    ? [
-        'التغليف فاخر والملمس مختلف من أول استخدام.',
-        'أصبح جزءًا من ضيافتنا اليومية.',
-        'ناعم وقوي بدون أن يفقد الإحساس الراقي.',
-      ]
-    : [
-        'The packaging feels luxurious and the texture is different from first use.',
-        'It became part of our daily hospitality.',
-        'Soft and strong without losing its refined feel.',
-      ];
+  const reviewQuotes = [
+    'التغليف فاخر والملمس مختلف من أول استخدام.',
+    'أصبح جزءًا من ضيافتنا اليومية.',
+    'ناعم وقوي بدون أن يفقد الإحساس الراقي.',
+  ];
 
   return (
     <>
@@ -102,10 +89,10 @@ export default function ProductPage({ params }: ProductPageProps) {
               </p>
               <div className="mt-9 flex items-end justify-between gap-6 border-y border-gold/15 py-6">
                 <p className="text-sm text-ink-mute">
-                  {isArabic ? 'السعر شامل الضريبة' : 'VAT included'}
+                  السعر شامل الضريبة
                 </p>
                 <p className="font-serif text-4xl font-medium text-caramel">
-                  {product.price} {isArabic ? 'ريال' : 'SAR'}
+                  {product.price} ريال
                 </p>
               </div>
 
@@ -118,17 +105,15 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <Button href={`/${params.locale}/checkout`}>
-                  {isArabic ? 'ابدأ الطلب بهدوء' : 'Begin order'}
+                <Button href="/checkout">
+                  ابدأ الطلب بهدوء
                 </Button>
-                <Button href={`/${params.locale}/shop`} variant="secondary">
-                  {isArabic ? 'العودة للمجموعة' : 'Back to collection'}
+                <Button href="/shop" variant="secondary">
+                  العودة للمجموعة
                 </Button>
               </div>
               <p className="mt-5 text-xs leading-6 text-ink-mute">
-                {isArabic
-                  ? 'الدفع الفعلي غير مفعّل في هذه المرحلة. سيتم ربط تجربة الشراء لاحقًا.'
-                  : 'Real payment is not active in this phase. Checkout integration will be connected later.'}
+                الدفع الفعلي غير مفعّل في هذه المرحلة. سيتم ربط تجربة الشراء لاحقًا.
               </p>
             </div>
           </div>
@@ -138,27 +123,16 @@ export default function ProductPage({ params }: ProductPageProps) {
       <section className="bg-champagne-pale">
         <Container>
           <Section
-            eyebrow={isArabic ? 'قصة المنتج' : 'Product story'}
-            title={isArabic ? 'تفصيل صغير يصنع إحساس المكان.' : 'A small detail that shapes the room.'}
-            description={
-              isArabic
-                ? 'صُمم هذا المنتج ليبتعد عن منطق الاستهلاك السريع. حضوره هادئ، ملمسه موثوق، وتغليفه يكمّل طابع المنزل أو مساحة الضيافة.'
-                : 'Designed away from fast-consumption logic, this product is quiet in presence, trusted in texture, and considered in packaging.'
-            }
+            eyebrow="قصة المنتج"
+            title="تفصيل صغير يصنع إحساس المكان."
+            description="صُمم هذا المنتج ليبتعد عن منطق الاستهلاك السريع. حضوره هادئ، ملمسه موثوق، وتغليفه يكمّل طابع المنزل أو مساحة الضيافة."
           >
             <div className="grid gap-5 lg:grid-cols-3">
-              {(isArabic
-                ? [
-                    ['الملمس', 'نعومة متوازنة لا تبدو هشة أو مبالغًا فيها.'],
-                    ['القوة', 'ست طبقات تمنح ثقة الاستخدام اليومي والضيافة.'],
-                    ['الحضور', 'تغليف هادئ ينسجم مع الديكور لا يزاحمه.'],
-                  ]
-                : [
-                    ['Texture', 'Balanced softness that does not feel fragile or overstated.'],
-                    ['Strength', 'Six layers for confident daily and hospitality use.'],
-                    ['Presence', 'Quiet packaging that complements the room rather than competing with it.'],
-                  ]
-              ).map(([title, copy]) => (
+              {[
+                ['الملمس', 'نعومة متوازنة لا تبدو هشة أو مبالغًا فيها.'],
+                ['القوة', 'ست طبقات تمنح ثقة الاستخدام اليومي والضيافة.'],
+                ['الحضور', 'تغليف هادئ ينسجم مع الديكور لا يزاحمه.'],
+              ].map(([title, copy]) => (
                 <article key={title} className="rounded-[2.5rem] border border-champagne/60 bg-cream p-8">
                   <h2 className="font-serif text-3xl font-medium text-ink">{title}</h2>
                   <p className="mt-4 text-sm leading-8 text-ink-soft">{copy}</p>
@@ -171,25 +145,25 @@ export default function ProductPage({ params }: ProductPageProps) {
 
       <Container>
         <Section
-          eyebrow={isArabic ? 'المواصفات والاستخدام' : 'Specs and occasions'}
-          title={isArabic ? 'واضح في التفاصيل، هادئ في العرض.' : 'Clear in detail, quiet in presentation.'}
+          eyebrow="المواصفات والاستخدام"
+          title="واضح في التفاصيل، هادئ في العرض."
         >
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div className="rounded-[2.5rem] border border-champagne-warm/40 bg-champagne-pale p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-                {isArabic ? 'المواصفات' : 'Specifications'}
+                المواصفات
               </p>
               <dl className="mt-8 grid gap-5">
                 <div className="flex items-center justify-between border-b border-honey/10 pb-4">
-                  <dt className="text-ink-soft">{isArabic ? 'عدد الطبقات' : 'Layers'}</dt>
+                  <dt className="text-ink-soft">عدد الطبقات</dt>
                   <dd className="font-semibold text-ink">{product.specs.layers}</dd>
                 </div>
                 <div className="flex items-center justify-between border-b border-honey/10 pb-4">
-                  <dt className="text-ink-soft">{isArabic ? 'عدد المناديل' : 'Sheets'}</dt>
+                  <dt className="text-ink-soft">عدد المناديل</dt>
                   <dd className="font-semibold text-ink">{product.specs.sheets}</dd>
                 </div>
                 <div className="flex items-center justify-between">
-                  <dt className="text-ink-soft">{isArabic ? 'الفئة' : 'Category'}</dt>
+                  <dt className="text-ink-soft">الفئة</dt>
                   <dd className="font-semibold text-ink">{categoryLabel}</dd>
                 </div>
               </dl>
@@ -197,7 +171,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
             <div className="rounded-[2.5rem] border border-champagne/60 bg-cream p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-                {isArabic ? 'مناسب لـ' : 'Usage occasions'}
+                مناسب لـ
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {occasions.map((occasion) => (
@@ -214,17 +188,13 @@ export default function ProductPage({ params }: ProductPageProps) {
       <section className="bg-caramel-deep text-cream">
         <Container>
           <Section
-            eyebrow={isArabic ? 'القيمة والتغليف' : 'Packaging and value'}
-            title={isArabic ? 'ليست علبة مناديل فقط؛ إنها جزء من الضيافة.' : 'Not just a tissue box; part of hospitality.'}
-            description={
-              isArabic
-                ? 'القيمة هنا في اجتماع الملمس، السماكة، وسكينة التصميم. منتج يومي بإحساس فندق فاخر أو عطر على طاولة جانبية.'
-                : 'Value lives in the meeting of texture, thickness, and quiet design: an everyday product with the feeling of a luxury hotel or fragrance object.'
-            }
+            eyebrow="القيمة والتغليف"
+            title="ليست علبة مناديل فقط؛ إنها جزء من الضيافة."
+            description="القيمة هنا في اجتماع الملمس، السماكة، وسكينة التصميم. منتج يومي بإحساس فندق فاخر أو عطر على طاولة جانبية."
             className="text-cream [&_h2]:text-cream [&_p]:text-cream/75"
           >
             <div className="grid gap-4 md:grid-cols-3">
-              {(isArabic ? ['ملمس فاخر', 'تغليف أنيق', 'حضور هادئ'] : ['Premium texture', 'Elegant packaging', 'Quiet presence']).map((item) => (
+              {['ملمس فاخر', 'تغليف أنيق', 'حضور هادئ'].map((item) => (
                 <div key={item} className="rounded-[2rem] border border-champagne/25 bg-cream/5 px-6 py-6 text-center text-sm font-semibold text-cream">
                   {item}
                 </div>
@@ -236,8 +206,8 @@ export default function ProductPage({ params }: ProductPageProps) {
 
       <Container>
         <Section
-          eyebrow={isArabic ? 'آراء مختارة' : 'Reviews preview'}
-          title={isArabic ? 'انطباع هادئ يتكرر.' : 'A quiet impression, repeated.'}
+          eyebrow="آراء مختارة"
+          title="انطباع هادئ يتكرر."
         >
           <div className="grid gap-5 md:grid-cols-3">
             {reviewQuotes.map((quote) => (
@@ -252,12 +222,12 @@ export default function ProductPage({ params }: ProductPageProps) {
         </Section>
 
         <Section
-          eyebrow={isArabic ? 'منتجات قريبة' : 'Related products'}
-          title={isArabic ? 'استكمل التجربة.' : 'Complete the experience.'}
+          eyebrow="منتجات قريبة"
+          title="استكمل التجربة."
         >
           <div className="grid gap-7 md:grid-cols-3">
             {relatedProducts.map((relatedProduct) => (
-              <ProductCard key={relatedProduct.id} product={relatedProduct} locale={params.locale} />
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
             ))}
           </div>
         </Section>
