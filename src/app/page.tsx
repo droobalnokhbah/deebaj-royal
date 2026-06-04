@@ -3,10 +3,10 @@ import { ProductCard } from '@/components/commerce/ProductCard';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
-import { getFeaturedProducts } from '@/data/products';
+import { PRODUCTS } from '@/data/products';
 
 export default function HomePage() {
-  const featuredProducts = getFeaturedProducts().slice(0, 4);
+  const featuredProducts = PRODUCTS.slice(0, 4);
 
   const trustSignals = ['شحن مجاني فوق ٢٠٠ ريال', 'ضمان رضا ١٤ يوم', 'معتمد للسوق السعودي'];
 
