@@ -3,37 +3,118 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FormEvent, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   selectCartSubtotal,
   useCartStore,
   type CartItem,
 } from '@/lib/cart-store';
 
-const WHATSAPP_NUMBER = '9665XXXXXXXX';
 const FREE_SHIPPING_THRESHOLD = 200;
+const BANK_IBAN_PLACEHOLDER = 'SA00 0000 0000 0000 0000 0000';
 
-const shippingOptions = [
+type PaymentAvailability = {
+  moyasar: boolean;
+  tabby: boolean;
+  tamara: boolean;
+};
+
+type CheckoutClientProps = {
+  paymentAvailability: PaymentAvailability;
+};
+
+const shippingCompanies = [
   {
-    id: 'express',
-    label: 'الرياض / جدة / الدمام — توصيل سريع',
-    description: 'توصيل سريع للمدن الرئيسية',
-    cost: 25,
+    id: 'aramex',
+    label: 'أرامكس',
+    labelEn: 'Aramex',
+    description: 'شركة شحن موثوقة داخل المملكة',
+    cost: 30,
   },
   {
-    id: 'other',
-    label: 'باقي المدن',
-    description: 'شحن موثوق لباقي مناطق المملكة',
-    cost: 35,
+    id: 'smsa',
+    label: 'سمسا',
+    labelEn: 'SMSA',
+    description: 'توصيل سريع للمدن الرئيسية وباقي المناطق',
+    cost: 30,
   },
   {
-    id: 'pickup',
-    label: 'استلام',
-    description: 'بدون رسوم شحن',
-    cost: 0,
+    id: 'spl',
+    label: 'البريد السعودي (سبل)',
+    labelEn: 'SPL',
+    description: 'خدمة وطنية مناسبة لمختلف المناطق',
+    cost: 30,
+  },
+  {
+    id: 'dhl',
+    label: 'DHL',
+    labelEn: 'DHL',
+    description: 'خيار شحن سريع عند توفره',
+    cost: 30,
   },
 ] as const;
 
-type ShippingOptionId = (typeof shippingOptions)[number]['id'];
+const paymentMethods = [
+  {
+    id: 'mada',
+    label: 'مدى',
+    logo: 'mada',
+    gateway: 'moyasar',
+    note: 'عبر Moyasar',
+  },
+  {
+    id: 'creditcard',
+    label: 'فيزا / ماستركارد',
+    logo: 'VISA',
+    gateway: 'moyasar',
+    note: 'بطاقات ائتمانية',
+  },
+  {
+    id: 'applepay',
+    label: 'Apple Pay',
+    logo: 'Pay',
+    gateway: 'moyasar',
+    note: 'دفع سريع',
+  },
+  {
+    id: 'stcpay',
+    label: 'STC Pay',
+    logo: 'STC',
+    gateway: 'moyasar',
+    note: 'محفظة رقمية',
+  },
+  {
+    id: 'tabby',
+    label: 'Tabby',
+    logo: 'tabby',
+    gateway: 'tabby',
+    note: 'تقسيط',
+  },
+  {
+    id: 'tamara',
+    label: 'Tamara',
+    logo: 'tamara',
+    gateway: 'tamara',
+    note: 'تقسيط',
+  },
+  {
+    id: 'bank',
+    label: 'التحويل البنكي',
+    logo: 'IBAN',
+    gateway: 'manual',
+    note: 'بانتظار تأكيد التحويل',
+  },
+  {
+    id: 'cod',
+    label: 'الدفع عند الاستلام',
+    logo: 'COD',
+    gateway: 'manual',
+    note: 'يؤكد الطلب مباشرة',
+  },
+] as const;
+
+type ShippingCompanyId = (typeof shippingCompanies)[number]['id'];
+type PaymentMethodId = (typeof paymentMethods)[number]['id'];
 
 type CustomerForm = {
   name: string;
@@ -43,29 +124,69 @@ type CustomerForm = {
   notes: string;
 };
 
+type OrderPayload = {
+  items: CartItem[];
+  customer: CustomerForm;
+  shipping: {
+    id: ShippingCompanyId;
+    label: string;
+    cost: number;
+  };
+  payment: {
+    id: PaymentMethodId;
+    label: string;
+    status: string;
+  };
+  totals: {
+    subtotal: number;
+    shipping: number;
+    total: number;
+  };
+};
+
 function formatSar(value: number) {
   return `${value.toLocaleString('ar-SA')} ريال`;
 }
 
-function buildItemsMessage(items: CartItem[]) {
-  return items
-    .map(
-      (item, index) =>
-        `${index + 1}. ${item.nameAr} — الكمية: ${item.quantity} — السعر: ${formatSar(
-          item.price * item.quantity,
-        )}`,
-    )
-    .join('\n');
+function isMethodEnabled(
+  method: (typeof paymentMethods)[number],
+  availability: PaymentAvailability,
+) {
+  if (method.gateway === 'manual') {
+    return true;
+  }
+
+  return availability[method.gateway];
 }
 
-export function CheckoutClient() {
+async function saveOrder(order: OrderPayload) {
+  try {
+    const response = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+
+    if (!response.ok) {
+      return { orderId: `DR-${Date.now()}`, saved: false };
+    }
+
+    return response.json() as Promise<{ orderId: string; saved: boolean }>;
+  } catch {
+    return { orderId: `DR-${Date.now()}`, saved: false };
+  }
+}
+
+export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
+  const router = useRouter();
   const items = useCartStore((state) => state.items);
   const subtotal = useCartStore(selectCartSubtotal);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
   const clearCart = useCartStore((state) => state.clearCart);
 
-  const [shippingId, setShippingId] = useState<ShippingOptionId>('express');
+  const [shippingId, setShippingId] = useState<ShippingCompanyId>('aramex');
+  const [paymentId, setPaymentId] = useState<PaymentMethodId>('cod');
   const [customer, setCustomer] = useState<CustomerForm>({
     name: '',
     phone: '',
@@ -73,13 +194,12 @@ export function CheckoutClient() {
     address: '',
     notes: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const selectedShipping = shippingOptions.find((option) => option.id === shippingId)!;
+  const selectedShipping = shippingCompanies.find((option) => option.id === shippingId)!;
+  const selectedPayment = paymentMethods.find((method) => method.id === paymentId)!;
   const shippingCost = useMemo(() => {
-    if (selectedShipping.id === 'pickup') {
-      return 0;
-    }
-
     return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : selectedShipping.cost;
   }, [selectedShipping, subtotal]);
   const total = subtotal + shippingCost;
@@ -88,33 +208,100 @@ export function CheckoutClient() {
     setCustomer((current) => ({ ...current, [field]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const createOrderPayload = (paymentStatus: string): OrderPayload => ({
+    items,
+    customer,
+    shipping: {
+      id: selectedShipping.id,
+      label: selectedShipping.label,
+      cost: shippingCost,
+    },
+    payment: {
+      id: selectedPayment.id,
+      label: selectedPayment.label,
+      status: paymentStatus,
+    },
+    totals: {
+      subtotal,
+      shipping: shippingCost,
+      total,
+    },
+  });
 
-    if (items.length === 0) {
+  const handleGatewayPayment = async (orderId: string, order: OrderPayload) => {
+    const gatewayPath =
+      selectedPayment.gateway === 'moyasar'
+        ? '/api/payment/moyasar'
+        : selectedPayment.gateway === 'tabby'
+          ? '/api/payment/tabby'
+          : '/api/payment/tamara';
+
+    const response = await fetch(gatewayPath, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId,
+        method: selectedPayment.id,
+        order,
+      }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'تعذر بدء عملية الدفع');
+    }
+
+    if (data.checkoutUrl) {
+      window.location.href = data.checkoutUrl;
       return;
     }
 
-    const message = [
-      'طلب جديد من موقع ديباج رويال',
-      '',
-      'المنتجات:',
-      buildItemsMessage(items),
-      '',
-      `المجموع الفرعي: ${formatSar(subtotal)}`,
-      `الشحن: ${shippingCost === 0 ? 'مجاني' : formatSar(shippingCost)} (${selectedShipping.label})`,
-      `الإجمالي: ${formatSar(total)}`,
-      '',
-      'بيانات العميل:',
-      `الاسم: ${customer.name}`,
-      `الجوال: ${customer.phone}`,
-      `المدينة: ${customer.city}`,
-      `العنوان: ${customer.address}`,
-      customer.notes ? `ملاحظات: ${customer.notes}` : 'ملاحظات: لا يوجد',
-    ].join('\n');
+    clearCart();
+    router.push(`/checkout/success?order=${encodeURIComponent(orderId)}`);
+  };
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+
+    if (items.length === 0) {
+      setError('السلة فارغة حاليًا.');
+      return;
+    }
+
+    if (!isMethodEnabled(selectedPayment, paymentAvailability)) {
+      setError('طريقة الدفع المختارة قيد التفعيل. يرجى اختيار التحويل البنكي أو الدفع عند الاستلام.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const paymentStatus =
+        selectedPayment.id === 'bank'
+          ? 'بانتظار تأكيد التحويل'
+          : selectedPayment.id === 'cod'
+            ? 'الدفع عند الاستلام'
+            : 'بانتظار الدفع';
+      const order = createOrderPayload(paymentStatus);
+      const savedOrder = await saveOrder(order);
+      const orderId = savedOrder.orderId || `DR-${Date.now()}`;
+
+      if (selectedPayment.id === 'bank' || selectedPayment.id === 'cod') {
+        clearCart();
+        router.push(`/checkout/success?order=${encodeURIComponent(orderId)}&method=${selectedPayment.id}`);
+        return;
+      }
+
+      await handleGatewayPayment(orderId, order);
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error ? caughtError.message : 'تعذر إتمام الطلب. يرجى المحاولة مرة أخرى.';
+      router.push(`/checkout/failed?reason=${encodeURIComponent(message)}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -220,19 +407,14 @@ export function CheckoutClient() {
 
         <section className="rounded-[2.5rem] border border-champagne/60 bg-cream p-5 shadow-[0_22px_70px_rgba(51,38,28,0.05)] sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-            التوصيل
+            شركة الشحن
           </p>
           <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-            اختر طريقة الشحن
+            اختر شركة التوصيل
           </h2>
           <div className="mt-7 grid gap-4">
-            {shippingOptions.map((option) => {
-              const displayCost =
-                option.id !== 'pickup' && subtotal >= FREE_SHIPPING_THRESHOLD
-                  ? 'مجاني'
-                  : option.cost === 0
-                    ? 'مجاني'
-                    : formatSar(option.cost);
+            {shippingCompanies.map((option) => {
+              const displayCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 'مجاني' : formatSar(option.cost);
 
               return (
                 <label
@@ -248,7 +430,9 @@ export function CheckoutClient() {
                     className="mt-1"
                   />
                   <span className="flex-1">
-                    <span className="block font-semibold text-ink">{option.label}</span>
+                    <span className="block font-semibold text-ink">
+                      {option.label} <span className="text-ink-mute">{option.labelEn}</span>
+                    </span>
                     <span className="mt-1 block text-sm text-ink-soft">
                       {option.description}
                     </span>
@@ -261,6 +445,61 @@ export function CheckoutClient() {
           <p className="mt-4 text-sm text-ink-mute">
             الشحن مجاني للطلبات فوق {FREE_SHIPPING_THRESHOLD} ريال.
           </p>
+        </section>
+
+        <section className="rounded-[2.5rem] border border-champagne/60 bg-cream p-5 shadow-[0_22px_70px_rgba(51,38,28,0.05)] sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
+            طريقة الدفع
+          </p>
+          <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
+            اختر طريقة الدفع
+          </h2>
+          <div className="mt-7 grid gap-4 sm:grid-cols-2">
+            {paymentMethods.map((method) => {
+              const enabled = isMethodEnabled(method, paymentAvailability);
+
+              return (
+                <label
+                  key={method.id}
+                  className={`relative flex min-h-28 cursor-pointer flex-col justify-between rounded-[2rem] border p-5 transition-colors ${
+                    enabled
+                      ? 'border-champagne-warm/40 bg-champagne-pale has-[:checked]:border-honey has-[:checked]:bg-cream'
+                      : 'cursor-not-allowed border-sand-200 bg-sand-100/60 opacity-70'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="payment"
+                    value={method.id}
+                    checked={paymentId === method.id}
+                    disabled={!enabled}
+                    onChange={() => setPaymentId(method.id)}
+                    className="sr-only"
+                  />
+                  <span className="flex items-start justify-between gap-4">
+                    <span className="text-lg font-semibold text-ink">{method.label}</span>
+                    <span className="rounded-full border border-champagne-warm/50 bg-cream px-3 py-1 text-xs font-semibold text-caramel">
+                      {method.logo}
+                    </span>
+                  </span>
+                  <span className="mt-4 text-sm text-ink-soft">
+                    {enabled ? method.note : 'قيد التفعيل'}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+
+          {paymentId === 'bank' && (
+            <div className="mt-6 rounded-[2rem] border border-champagne-warm/40 bg-champagne-pale p-5 text-sm leading-8 text-ink-soft">
+              <p className="font-semibold text-ink">بيانات التحويل البنكي</p>
+              <p className="mt-2">IBAN: {BANK_IBAN_PLACEHOLDER}</p>
+              <p>
+                بعد التحويل، أرسل إثبات التحويل عبر واتساب. سيتم تسجيل الطلب بحالة
+                "بانتظار تأكيد التحويل".
+              </p>
+            </div>
+          )}
         </section>
 
         <section className="rounded-[2.5rem] border border-champagne/60 bg-cream p-5 shadow-[0_22px_70px_rgba(51,38,28,0.05)] sm:p-8">
@@ -340,10 +579,14 @@ export function CheckoutClient() {
             <span className="font-semibold text-ink">{formatSar(subtotal)}</span>
           </div>
           <div className="flex justify-between gap-4">
-            <span>الشحن</span>
+            <span>{selectedShipping.label}</span>
             <span className="font-semibold text-ink">
               {shippingCost === 0 ? 'مجاني' : formatSar(shippingCost)}
             </span>
+          </div>
+          <div className="flex justify-between gap-4">
+            <span>طريقة الدفع</span>
+            <span className="font-semibold text-ink">{selectedPayment.label}</span>
           </div>
           <div className="border-t border-champagne-warm/40 pt-4">
             <div className="flex items-end justify-between gap-4">
@@ -355,16 +598,22 @@ export function CheckoutClient() {
           </div>
         </div>
 
+        {error && (
+          <p className="mt-5 rounded-2xl bg-cream px-4 py-3 text-sm text-caramel-deep">
+            {error}
+          </p>
+        )}
+
         <button
           type="submit"
-          disabled={items.length === 0}
+          disabled={items.length === 0 || isSubmitting}
           className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-caramel-deep px-7 text-sm font-semibold text-cream shadow-[0_18px_45px_rgba(51,38,28,0.13)] transition-colors hover:bg-ink disabled:cursor-not-allowed disabled:bg-ink-mute"
         >
-          إتمام الطلب عبر واتساب
+          {isSubmitting ? 'جاري إتمام الطلب...' : 'إتمام الطلب'}
         </button>
 
         <p className="mt-4 text-center text-xs leading-6 text-ink-mute">
-          سيتم فتح واتساب برسالة جاهزة تحتوي على تفاصيل الطلب.
+          التحويل البنكي والدفع عند الاستلام يعملان الآن. طرق الدفع الإلكترونية ستعمل عند إضافة مفاتيحها.
         </p>
       </aside>
     </form>
