@@ -15,6 +15,7 @@ export async function POST(request: Request) {
   const body = await request.json();
   const order = body.order;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://deebajroyal.com';
+  const locale = order?.locale === 'en' ? 'en' : 'ar';
   const [firstName, ...lastNameParts] = String(order.customer.name).split(' ');
   const lastName = lastNameParts.join(' ') || firstName;
 
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
       country_code: 'SA',
       payment_type: 'PAY_BY_INSTALMENTS',
       instalments: 3,
-      locale: 'ar_SA',
+      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
       items: order.items.map((item: any) => ({
         reference_id: String(item.productId),
         type: 'physical',
@@ -62,9 +63,9 @@ export async function POST(request: Request) {
         phone_number: order.customer.phone,
       },
       merchant_url: {
-        success: `${siteUrl}/checkout/success?order=${encodeURIComponent(body.orderId)}`,
-        failure: `${siteUrl}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
-        cancel: `${siteUrl}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
+        success: `${siteUrl}/${locale}/checkout/success?order=${encodeURIComponent(body.orderId)}`,
+        failure: `${siteUrl}/${locale}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
+        cancel: `${siteUrl}/${locale}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
         notification: `${siteUrl}/api/payment/tamara`,
       },
     });

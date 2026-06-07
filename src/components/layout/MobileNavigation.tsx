@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { localizedPath } from '@/lib/i18n';
+import type { Locale } from '@/lib/i18n/types';
 
 type NavItem = {
   href: string;
@@ -9,10 +11,15 @@ type NavItem = {
 };
 
 type MobileNavigationProps = {
+  locale: Locale;
   items: NavItem[];
+  labels: {
+    menu: string;
+    close: string;
+  };
 };
 
-export function MobileNavigation({ items }: MobileNavigationProps) {
+export function MobileNavigation({ locale, items, labels }: MobileNavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -24,7 +31,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
         onClick={() => setIsOpen((current) => !current)}
         className="rounded-full border border-honey/25 px-4 py-2 text-sm font-semibold text-ink"
       >
-        القائمة
+        {labels.menu}
       </button>
 
       {isOpen && (
@@ -41,7 +48,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
               onClick={() => setIsOpen(false)}
               className="rounded-full bg-cream-soft px-3 py-1 text-sm text-ink"
             >
-              إغلاق
+              {labels.close}
             </button>
           </div>
 
@@ -49,7 +56,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
             {items.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={localizedPath(locale, item.href)}
                 onClick={() => setIsOpen(false)}
                 className="rounded-2xl px-4 py-4 text-base font-medium text-ink transition-colors hover:bg-cream-soft"
               >

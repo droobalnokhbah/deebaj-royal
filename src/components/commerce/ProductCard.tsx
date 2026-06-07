@@ -3,15 +3,19 @@ import Image from 'next/image';
 import type { Product } from '@/data/products';
 import { Button } from '@/components/ui/Button';
 import { QuickAddToCartButton } from '@/components/commerce/QuickAddToCartButton';
+import { getText, type Locale } from '@/lib/i18n/types';
+import { localizedPath, type Dictionary } from '@/lib/i18n';
 
 type ProductCardProps = {
   product: Product;
+  locale: Locale;
+  dictionary: Dictionary['common'];
 };
 
-export function ProductCard({ product }: ProductCardProps) {
-  const name = product.nameAr;
-  const description = product.descAr;
-  const href = `/product/${product.slug}`;
+export function ProductCard({ product, locale, dictionary }: ProductCardProps) {
+  const name = getText(locale, { ar: product.nameAr, en: product.nameEn });
+  const description = getText(locale, { ar: product.descAr, en: product.descEn });
+  const href = localizedPath(locale, `/product/${product.slug}`);
   const image = product.images[0];
 
   return (
@@ -37,23 +41,23 @@ export function ProductCard({ product }: ProductCardProps) {
             <p className="mt-4 text-sm leading-8 text-ink-soft">{description}</p>
           </div>
           <p className="text-base font-semibold text-honey">
-            {product.price} ريال
+            {product.price} {dictionary.sar}
           </p>
         </div>
 
         <div className="mt-7 flex flex-wrap gap-2 text-xs text-ink-mute">
           <span className="rounded-full bg-champagne-pale px-3 py-1">
-            {product.specs.layers} طبقات
+            {product.specs.layers} {locale === 'ar' ? 'طبقات' : 'layers'}
           </span>
           <span className="rounded-full bg-champagne-pale px-3 py-1">
-            {product.specs.sheets} منديل
+            {product.specs.sheets} {locale === 'ar' ? 'منديل' : 'sheets'}
           </span>
         </div>
 
         <Button href={href} variant="secondary" className="mt-8 w-full">
-          عرض المنتج
+          {dictionary.viewProduct}
         </Button>
-        <QuickAddToCartButton product={product} />
+        <QuickAddToCartButton product={product} label={dictionary.addToCart} addedLabel={dictionary.added} />
       </div>
     </article>
   );

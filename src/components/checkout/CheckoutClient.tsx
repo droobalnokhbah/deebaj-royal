@@ -9,6 +9,8 @@ import {
   useCartStore,
   type CartItem,
 } from '@/lib/cart-store';
+import { localizedPath, type Dictionary } from '@/lib/i18n';
+import type { Locale } from '@/lib/i18n/types';
 
 const FREE_SHIPPING_THRESHOLD = 200;
 const BANK_IBAN_PLACEHOLDER = 'SA00 0000 0000 0000 0000 0000';
@@ -20,6 +22,8 @@ type PaymentAvailability = {
 };
 
 type CheckoutClientProps = {
+  locale: Locale;
+  dictionary: Dictionary['checkout'];
   paymentAvailability: PaymentAvailability;
 };
 
@@ -125,6 +129,7 @@ type CustomerForm = {
 };
 
 type OrderPayload = {
+  locale: Locale;
   items: CartItem[];
   customer: CustomerForm;
   shipping: {
@@ -146,6 +151,10 @@ type OrderPayload = {
 
 function formatSar(value: number) {
   return `${value.toLocaleString('ar-SA')} ريال`;
+}
+
+function getItemName(item: CartItem, locale: Locale) {
+  return locale === 'ar' ? item.nameAr : item.nameEn;
 }
 
 function isMethodEnabled(
@@ -177,7 +186,7 @@ async function saveOrder(order: OrderPayload) {
   }
 }
 
-export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
+export function CheckoutClient({ locale, dictionary, paymentAvailability }: CheckoutClientProps) {
   const router = useRouter();
   const items = useCartStore((state) => state.items);
   const subtotal = useCartStore(selectCartSubtotal);
@@ -209,16 +218,17 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
   };
 
   const createOrderPayload = (paymentStatus: string): OrderPayload => ({
+    locale,
     items,
     customer,
     shipping: {
       id: selectedShipping.id,
-      label: selectedShipping.label,
+      label: dictionary.shippingOptions[selectedShipping.id][0],
       cost: shippingCost,
     },
     payment: {
       id: selectedPayment.id,
-      label: selectedPayment.label,
+      label: dictionary.paymentMethods[selectedPayment.id][0],
       status: paymentStatus,
     },
     totals: {
@@ -249,7 +259,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data?.message || 'تعذر بدء عملية الدفع');
+      throw new Error(data?.message || dictionary.failedError);
     }
 
     if (data.checkoutUrl) {
@@ -258,7 +268,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
     }
 
     clearCart();
-    router.push(`/checkout/success?order=${encodeURIComponent(orderId)}`);
+    router.push(`${localizedPath(locale, '/checkout/success')}?order=${encodeURIComponent(orderId)}`);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -266,12 +276,12 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
     setError('');
 
     if (items.length === 0) {
-      setError('السلة فارغة حاليًا.');
+      setError(dictionary.emptyError);
       return;
     }
 
     if (!isMethodEnabled(selectedPayment, paymentAvailability)) {
-      setError('طريقة الدفع المختارة قيد التفعيل. يرجى اختيار التحويل البنكي أو الدفع عند الاستلام.');
+      setError(dictionary.inactivePaymentError);
       return;
     }
 
@@ -280,25 +290,25 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
     try {
       const paymentStatus =
         selectedPayment.id === 'bank'
-          ? 'بانتظار تأكيد التحويل'
+          ? dictionary.paymentStatus.bank
           : selectedPayment.id === 'cod'
-            ? 'الدفع عند الاستلام'
-            : 'بانتظار الدفع';
+            ? dictionary.paymentStatus.cod
+            : dictionary.paymentStatus.online;
       const order = createOrderPayload(paymentStatus);
       const savedOrder = await saveOrder(order);
       const orderId = savedOrder.orderId || `DR-${Date.now()}`;
 
       if (selectedPayment.id === 'bank' || selectedPayment.id === 'cod') {
         clearCart();
-        router.push(`/checkout/success?order=${encodeURIComponent(orderId)}&method=${selectedPayment.id}`);
+        router.push(`${localizedPath(locale, '/checkout/success')}?order=${encodeURIComponent(orderId)}&method=${selectedPayment.id}`);
         return;
       }
 
       await handleGatewayPayment(orderId, order);
     } catch (caughtError) {
       const message =
-        caughtError instanceof Error ? caughtError.message : 'تعذر إتمام الطلب. يرجى المحاولة مرة أخرى.';
-      router.push(`/checkout/failed?reason=${encodeURIComponent(message)}`);
+        caughtError instanceof Error ? caughtError.message : dictionary.failedError;
+      router.push(`${localizedPath(locale, '/checkout/failed')}?reason=${encodeURIComponent(message)}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -311,10 +321,10 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-                السلة
+                {dictionary.cart}
               </p>
               <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-                مراجعة الطلب
+                {dictionary.reviewOrder}
               </h2>
             </div>
             {items.length > 0 && (
@@ -323,19 +333,19 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
                 onClick={clearCart}
                 className="rounded-full border border-champagne-warm/40 px-4 py-2 text-sm text-ink-soft transition-colors hover:border-honey hover:text-honey"
               >
-                تفريغ السلة
+                {dictionary.clearCart}
               </button>
             )}
           </div>
 
           {items.length === 0 ? (
             <div className="mt-8 rounded-[2rem] bg-champagne-pale p-6 text-center">
-              <p className="text-ink-soft">السلة فارغة حاليًا.</p>
+              <p className="text-ink-soft">{dictionary.emptyCart}</p>
               <Link
-                href="/shop"
+                href={localizedPath(locale, '/shop')}
                 className="mt-5 inline-flex rounded-full bg-caramel-deep px-6 py-3 text-sm font-semibold text-cream"
               >
-                العودة للمنتجات
+                {dictionary.backToProducts}
               </Link>
             </div>
           ) : (
@@ -358,10 +368,10 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
                   <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
                     <div>
                       <h3 className="font-serif text-2xl font-medium text-ink">
-                        {item.nameAr}
+                        {getItemName(item, locale)}
                       </h3>
                       <p className="mt-2 text-sm text-ink-soft">
-                        {formatSar(item.price)} للقطعة
+                        {formatSar(item.price)} {dictionary.perItem}
                       </p>
                     </div>
 
@@ -395,7 +405,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
                         onClick={() => removeItem(item.productId)}
                         className="rounded-full px-3 py-2 text-sm text-ink-mute hover:bg-cream hover:text-honey"
                       >
-                        إزالة
+                      {dictionary.remove}
                       </button>
                     </div>
                   </div>
@@ -407,10 +417,10 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
 
         <section className="rounded-[2.5rem] border border-champagne/60 bg-cream p-5 shadow-[0_22px_70px_rgba(51,38,28,0.05)] sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-            شركة الشحن
+            {dictionary.shippingCompany}
           </p>
           <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-            اختر شركة التوصيل
+            {dictionary.chooseShipping}
           </h2>
           <div className="mt-7 grid gap-4">
             {shippingCompanies.map((option) => {
@@ -431,10 +441,11 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
                   />
                   <span className="flex-1">
                     <span className="block font-semibold text-ink">
-                      {option.label} <span className="text-ink-mute">{option.labelEn}</span>
+                      {dictionary.shippingOptions[option.id][0]}{' '}
+                      <span className="text-ink-mute">{dictionary.shippingOptions[option.id][1]}</span>
                     </span>
                     <span className="mt-1 block text-sm text-ink-soft">
-                      {option.description}
+                      {dictionary.shippingOptions[option.id][2]}
                     </span>
                   </span>
                   <span className="text-sm font-semibold text-caramel">{displayCost}</span>
@@ -443,16 +454,16 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
             })}
           </div>
           <p className="mt-4 text-sm text-ink-mute">
-            الشحن مجاني للطلبات فوق {FREE_SHIPPING_THRESHOLD} ريال.
+            {dictionary.freeShippingOver}
           </p>
         </section>
 
         <section className="rounded-[2.5rem] border border-champagne/60 bg-cream p-5 shadow-[0_22px_70px_rgba(51,38,28,0.05)] sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-            طريقة الدفع
+            {dictionary.paymentMethod}
           </p>
           <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-            اختر طريقة الدفع
+            {dictionary.choosePayment}
           </h2>
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
             {paymentMethods.map((method) => {
@@ -477,13 +488,13 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
                     className="sr-only"
                   />
                   <span className="flex items-start justify-between gap-4">
-                    <span className="text-lg font-semibold text-ink">{method.label}</span>
+                    <span className="text-lg font-semibold text-ink">{dictionary.paymentMethods[method.id][0]}</span>
                     <span className="rounded-full border border-champagne-warm/50 bg-cream px-3 py-1 text-xs font-semibold text-caramel">
                       {method.logo}
                     </span>
                   </span>
                   <span className="mt-4 text-sm text-ink-soft">
-                    {enabled ? method.note : 'قيد التفعيل'}
+                    {enabled ? dictionary.paymentMethods[method.id][1] : dictionary.activating}
                   </span>
                 </label>
               );
@@ -492,11 +503,10 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
 
           {paymentId === 'bank' && (
             <div className="mt-6 rounded-[2rem] border border-champagne-warm/40 bg-champagne-pale p-5 text-sm leading-8 text-ink-soft">
-              <p className="font-semibold text-ink">بيانات التحويل البنكي</p>
+              <p className="font-semibold text-ink">{dictionary.bankDetails}</p>
               <p className="mt-2">IBAN: {BANK_IBAN_PLACEHOLDER}</p>
               <p>
-                بعد التحويل، أرسل إثبات التحويل عبر واتساب. سيتم تسجيل الطلب بحالة
-                "بانتظار تأكيد التحويل".
+                {dictionary.bankInstructions}
               </p>
             </div>
           )}
@@ -504,15 +514,15 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
 
         <section className="rounded-[2.5rem] border border-champagne/60 bg-cream p-5 shadow-[0_22px_70px_rgba(51,38,28,0.05)] sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-            بيانات العميل
+            {dictionary.customerDetails}
           </p>
           <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-            معلومات التوصيل
+            {dictionary.deliveryInfo}
           </h2>
 
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
             <label className="grid gap-2 text-sm text-ink-soft">
-              الاسم الكامل
+              {dictionary.name}
               <input
                 required
                 value={customer.name}
@@ -522,7 +532,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
             </label>
 
             <label className="grid gap-2 text-sm text-ink-soft">
-              رقم الجوال
+              {dictionary.phone}
               <input
                 required
                 type="tel"
@@ -533,7 +543,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
             </label>
 
             <label className="grid gap-2 text-sm text-ink-soft">
-              المدينة
+              {dictionary.city}
               <input
                 required
                 value={customer.city}
@@ -543,7 +553,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
             </label>
 
             <label className="grid gap-2 text-sm text-ink-soft sm:col-span-2">
-              العنوان التفصيلي
+              {dictionary.address}
               <input
                 required
                 value={customer.address}
@@ -553,7 +563,7 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
             </label>
 
             <label className="grid gap-2 text-sm text-ink-soft sm:col-span-2">
-              ملاحظات
+              {dictionary.notes}
               <textarea
                 rows={4}
                 value={customer.notes}
@@ -567,30 +577,30 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
 
       <aside className="h-fit rounded-[2.5rem] border border-champagne/60 bg-champagne-pale p-5 shadow-[0_22px_70px_rgba(51,38,28,0.06)] sm:p-8 lg:sticky lg:top-32">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-honey">
-          الإجمالي
+          {dictionary.totalEyebrow}
         </p>
         <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-          ملخص الطلب
+          {dictionary.orderSummary}
         </h2>
 
         <div className="mt-8 grid gap-4 text-sm text-ink-soft">
           <div className="flex justify-between gap-4">
-            <span>المجموع الفرعي</span>
+            <span>{dictionary.subtotal}</span>
             <span className="font-semibold text-ink">{formatSar(subtotal)}</span>
           </div>
           <div className="flex justify-between gap-4">
-            <span>{selectedShipping.label}</span>
+            <span>{dictionary.shippingOptions[selectedShipping.id][0]}</span>
             <span className="font-semibold text-ink">
               {shippingCost === 0 ? 'مجاني' : formatSar(shippingCost)}
             </span>
           </div>
           <div className="flex justify-between gap-4">
-            <span>طريقة الدفع</span>
-            <span className="font-semibold text-ink">{selectedPayment.label}</span>
+            <span>{dictionary.payment}</span>
+            <span className="font-semibold text-ink">{dictionary.paymentMethods[selectedPayment.id][0]}</span>
           </div>
           <div className="border-t border-champagne-warm/40 pt-4">
             <div className="flex items-end justify-between gap-4">
-              <span className="text-base text-ink">الإجمالي</span>
+              <span className="text-base text-ink">{dictionary.total}</span>
               <span className="font-serif text-4xl font-medium text-caramel">
                 {formatSar(total)}
               </span>
@@ -609,11 +619,11 @@ export function CheckoutClient({ paymentAvailability }: CheckoutClientProps) {
           disabled={items.length === 0 || isSubmitting}
           className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-caramel-deep px-7 text-sm font-semibold text-cream shadow-[0_18px_45px_rgba(51,38,28,0.13)] transition-colors hover:bg-ink disabled:cursor-not-allowed disabled:bg-ink-mute"
         >
-          {isSubmitting ? 'جاري إتمام الطلب...' : 'إتمام الطلب'}
+          {isSubmitting ? dictionary.submitting : dictionary.submit}
         </button>
 
         <p className="mt-4 text-center text-xs leading-6 text-ink-mute">
-          التحويل البنكي والدفع عند الاستلام يعملان الآن. طرق الدفع الإلكترونية ستعمل عند إضافة مفاتيحها.
+          {dictionary.footerNote}
         </p>
       </aside>
     </form>

@@ -15,6 +15,7 @@ export async function POST(request: Request) {
   const body = await request.json();
   const order = body.order;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://deebajroyal.com';
+  const locale = order?.locale === 'en' ? 'en' : 'ar';
 
   try {
     const session = await createTabbyCheckout({
@@ -41,12 +42,12 @@ export async function POST(request: Request) {
           })),
         },
       },
-      lang: 'ar',
+      lang: locale,
       merchant_code: process.env.NEXT_PUBLIC_TABBY_MERCHANT_CODE || 'SAU',
       merchant_urls: {
-        success: `${siteUrl}/checkout/success?order=${encodeURIComponent(body.orderId)}`,
-        cancel: `${siteUrl}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
-        failure: `${siteUrl}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
+        success: `${siteUrl}/${locale}/checkout/success?order=${encodeURIComponent(body.orderId)}`,
+        cancel: `${siteUrl}/${locale}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
+        failure: `${siteUrl}/${locale}/checkout/failed?order=${encodeURIComponent(body.orderId)}`,
       },
     });
 

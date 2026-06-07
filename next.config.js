@@ -43,18 +43,73 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/ar',
-        destination: '/',
-        permanent: true,
-      },
-      {
-        source: '/ar/:path*',
-        destination: '/:path*',
-        permanent: true,
+        source: '/',
+        destination: '/ar',
+        permanent: false,
       },
       {
         source: '/home',
-        destination: '/',
+        destination: '/ar',
+        permanent: true,
+      },
+      {
+        source: '/shop',
+        destination: '/ar/shop',
+        permanent: true,
+      },
+      {
+        source: '/product/:slug*',
+        destination: '/ar/product/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/about',
+        destination: '/ar/about',
+        permanent: true,
+      },
+      {
+        source: '/luxury-experience',
+        destination: '/ar/luxury-experience',
+        permanent: true,
+      },
+      {
+        source: '/subscription',
+        destination: '/ar/subscription',
+        permanent: true,
+      },
+      {
+        source: '/wholesale',
+        destination: '/ar/wholesale',
+        permanent: true,
+      },
+      {
+        source: '/faq',
+        destination: '/ar/faq',
+        permanent: true,
+      },
+      {
+        source: '/shipping-policy',
+        destination: '/ar/shipping-policy',
+        permanent: true,
+      },
+      {
+        source: '/return-policy',
+        destination: '/ar/return-policy',
+        permanent: true,
+      },
+      {
+        source: '/contact',
+        destination: '/ar/contact',
+        permanent: true,
+      },
+      {
+        source: '/checkout',
+        destination: '/ar/checkout',
+        permanent: true,
+      },
+      {
+        source: '/reviews',
+        destination: '/ar/reviews',
         permanent: true,
       },
     ];

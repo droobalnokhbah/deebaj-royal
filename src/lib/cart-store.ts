@@ -7,6 +7,7 @@ export type CartItem = {
   productId: number;
   slug: string;
   nameAr: string;
+  nameEn: string;
   price: number;
   image: string;
   quantity: number;
@@ -25,6 +26,7 @@ function toCartItem(product: Product, quantity: number): CartItem {
     productId: product.id,
     slug: product.slug,
     nameAr: product.nameAr,
+    nameEn: product.nameEn,
     price: product.price,
     image: product.images[0],
     quantity,

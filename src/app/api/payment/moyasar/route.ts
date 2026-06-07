@@ -26,6 +26,7 @@ export async function POST(request: Request) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://deebajroyal.com';
+  const locale = body.order?.locale === 'en' ? 'en' : 'ar';
   const amount = Math.round(Number(body.order?.totals?.total || 0) * 100);
 
   const response = await fetch('https://api.moyasar.com/v1/payments', {
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
       amount,
       currency: 'SAR',
       description: `Deebaj Royal order ${body.orderId}`,
-      callback_url: `${siteUrl}/checkout/success?order=${encodeURIComponent(body.orderId)}`,
+      callback_url: `${siteUrl}/${locale}/checkout/success?order=${encodeURIComponent(body.orderId)}`,
       source: {
         type: moyasarSources[method],
       },
