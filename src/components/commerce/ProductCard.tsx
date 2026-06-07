@@ -15,16 +15,16 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images[0];
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[2.5rem] border border-champagne/50 bg-cream shadow-[0_26px_80px_rgba(51,38,28,0.055)] transition-colors hover:border-gold/60">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[2.75rem] border border-champagne/55 bg-cream shadow-[0_22px_70px_rgba(51,38,28,0.06)] transition-all duration-500 hover:-translate-y-1 hover:border-gold/70 hover:shadow-[0_34px_100px_rgba(51,38,28,0.13)]">
       <Link href={href} className="block">
-        <div className="bg-champagne-pale p-5">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-champagne-warm/40 bg-cream shadow-inner">
+        <div className="bg-champagne-pale p-4 sm:p-5">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-champagne-warm/40 bg-cream shadow-inner">
             <Image
               src={image}
               alt={name}
               fill
               sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.045]"
             />
           </div>
         </div>
@@ -33,10 +33,10 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="flex flex-1 flex-col p-7 sm:p-8">
         <div className="grid gap-5">
           <div>
-            <h3 className="font-serif text-2xl font-medium text-ink">{name}</h3>
+            <h3 className="font-serif text-3xl font-medium leading-tight text-ink">{name}</h3>
             <p className="mt-4 text-sm leading-8 text-ink-soft">{description}</p>
           </div>
-          <p className="text-sm font-semibold text-honey">
+          <p className="text-base font-semibold text-honey">
             {product.price} ريال
           </p>
         </div>

@@ -16,21 +16,21 @@ export function Section({
   description,
 }: SectionProps) {
   return (
-    <section className={`py-20 sm:py-24 lg:py-32 ${className}`}>
+    <section className={`py-24 sm:py-28 lg:py-36 ${className}`}>
       {(eyebrow || title || description) && (
-        <div className="mb-12 max-w-3xl lg:mb-16">
+        <div className="mb-14 max-w-4xl lg:mb-18">
           {eyebrow && (
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-honey">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-honey">
               {eyebrow}
             </p>
           )}
           {title && (
-            <h2 className="font-serif text-4xl font-medium leading-[1.08] text-ink sm:text-5xl lg:text-6xl">
+            <h2 className="font-serif text-5xl font-medium leading-[1.04] text-ink sm:text-6xl lg:text-7xl">
               {title}
             </h2>
           )}
           {description && (
-            <p className="mt-5 text-base leading-8 text-ink-soft sm:text-lg">
+            <p className="mt-6 max-w-3xl text-lg leading-9 text-ink-soft sm:text-xl sm:leading-10">
               {description}
             </p>
           )}
