@@ -18,13 +18,13 @@ export function ProductCard({ product }: ProductCardProps) {
     <article className="group flex h-full flex-col overflow-hidden rounded-[2.75rem] border border-champagne/55 bg-cream shadow-[0_22px_70px_rgba(51,38,28,0.06)] transition-all duration-500 hover:-translate-y-1 hover:border-gold/70 hover:shadow-[0_34px_100px_rgba(51,38,28,0.13)]">
       <Link href={href} className="block">
         <div className="bg-champagne-pale p-4 sm:p-5">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-champagne-warm/40 bg-cream shadow-inner">
+          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-champagne-warm/40 bg-[#fffaf1] p-5 shadow-inner sm:p-6">
             <Image
               src={image}
               alt={name}
               fill
               sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.045]"
+              className="object-contain p-4 transition-transform duration-700 group-hover:scale-[1.025] sm:p-5"
             />
           </div>
         </div>
