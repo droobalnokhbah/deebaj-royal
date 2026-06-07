@@ -7,7 +7,7 @@ export default function CheckoutPage() {
     <Container>
       <Section
         eyebrow="إتمام الطلب"
-        title="مراجعة هادئة قبل إرسال الطلب"
+        title="مراجعة الطلب قبل الإرسال"
         description="راجع المنتجات، اختر الشحن، وأرسل تفاصيل الطلب عبر واتساب. لا توجد بوابة دفع إلكترونية في هذه المرحلة."
       >
         <CheckoutClient />

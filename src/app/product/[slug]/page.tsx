@@ -41,7 +41,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     gold: 'إصدار الهدايا',
   }[product.category];
 
-  const occasions = ['المجلس والضيافة', 'غرف النوم الهادئة', 'المكاتب الراقية', 'الهدايا اليومية'];
+  const occasions = ['المجلس والضيافة', 'غرف النوم الفاخرة', 'المكاتب الراقية', 'الهدايا اليومية'];
 
   const reviewQuotes = [
     'التغليف فاخر والملمس مختلف من أول استخدام.',
@@ -110,13 +110,13 @@ export default function ProductPage({ params }: ProductPageProps) {
           <Section
             eyebrow="قصة المنتج"
             title="تفصيل صغير يصنع إحساس المكان."
-            description="صُمم هذا المنتج ليبتعد عن منطق الاستهلاك السريع. حضوره هادئ، ملمسه موثوق، وتغليفه يكمّل طابع المنزل أو مساحة الضيافة."
+            description="صُمم هذا المنتج ليبتعد عن منطق الاستهلاك السريع. حضوره متزن، ملمسه موثوق، وتغليفه يكمّل طابع المنزل أو مساحة الضيافة."
           >
             <div className="grid gap-5 lg:grid-cols-3">
               {[
                 ['الملمس', 'نعومة متوازنة لا تبدو هشة أو مبالغًا فيها.'],
                 ['القوة', 'ست طبقات تمنح ثقة الاستخدام اليومي والضيافة.'],
-                ['الحضور', 'تغليف هادئ ينسجم مع الديكور لا يزاحمه.'],
+                ['الحضور', 'تغليف أنيق ينسجم مع الديكور لا يزاحمه.'],
               ].map(([title, copy]) => (
                 <article key={title} className="rounded-[2.5rem] border border-champagne/60 bg-cream p-8">
                   <h2 className="font-serif text-3xl font-medium text-ink">{title}</h2>
@@ -131,7 +131,7 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Container>
         <Section
           eyebrow="المواصفات والاستخدام"
-          title="واضح في التفاصيل، هادئ في العرض."
+          title="واضح في التفاصيل، راقٍ في العرض."
         >
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div className="rounded-[2.5rem] border border-champagne-warm/40 bg-champagne-pale p-8">
@@ -179,7 +179,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             className="text-cream [&_h2]:text-cream [&_p]:text-cream/75"
           >
             <div className="grid gap-4 md:grid-cols-3">
-              {['ملمس فاخر', 'تغليف أنيق', 'حضور هادئ'].map((item) => (
+              {['ملمس فاخر', 'تغليف أنيق', 'حضور متزن'].map((item) => (
                 <div key={item} className="rounded-[2rem] border border-champagne/25 bg-cream/5 px-6 py-6 text-center text-sm font-semibold text-cream">
                   {item}
                 </div>
@@ -192,7 +192,7 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Container>
         <Section
           eyebrow="آراء مختارة"
-          title="انطباع هادئ يتكرر."
+          title="انطباع فاخر يتكرر."
         >
           <div className="grid gap-5 md:grid-cols-3">
             {reviewQuotes.map((quote) => (

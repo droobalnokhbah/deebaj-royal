@@ -8,7 +8,7 @@ export default function SubscriptionPage() {
     <Container>
       <Section
         eyebrow="الاشتراكات"
-        title="عناية فاخرة متكررة، بهدوء ووضوح"
+        title="عناية فاخرة متكررة، برقي ووضوح"
         description="الدفع الخاص بالاشتراكات غير مفعّل بعد. تعرض هذه الصفحة الباقات فقط إلى حين ربط تجربة التجارة لاحقًا."
       >
         <div className="grid gap-6 lg:grid-cols-3">

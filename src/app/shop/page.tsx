@@ -43,7 +43,7 @@ export default function ShopPage() {
               اكتشف النعومة كما تُقدّم في الضيافة الراقية.
             </h1>
             <p className="mt-7 text-lg leading-9 text-ink-soft sm:text-xl sm:leading-10">
-              تجربة تسوق هادئة، بلا ازدحام أو خصومات صاخبة. اختر المنتج بحسب اللحظة: المنزل، الضيافة، المكتب، السفر، أو الهدايا.
+              تجربة تسوق بلا ازدحام أو خصومات صاخبة. اختر المنتج بحسب اللحظة: المنزل، الضيافة، المكتب، السفر، أو الهدايا.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export default function ShopPage() {
 
       <Container>
         <Section
-          eyebrow="تصنيف هادئ"
+          eyebrow="تصنيف واضح"
           title="اختر بحسب الاستخدام، لا بحسب الضجيج."
           description="بدل بطاقات مزدحمة وعروض متداخلة، يركّز المتجر على وضوح الاستخدام، جودة الملمس، وحضور التغليف."
         >
@@ -108,7 +108,7 @@ export default function ShopPage() {
             ابدأ بالمنتج المناسب للمكان الذي تريد أن يترك انطباعًا.
           </h2>
           <Button href="/contact" variant="secondary" className="mt-9">
-            استشارة هادئة
+            استشارة خاصة
           </Button>
         </section>
       </Container>
