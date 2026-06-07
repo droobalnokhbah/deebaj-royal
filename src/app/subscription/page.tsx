@@ -8,8 +8,8 @@ export default function SubscriptionPage() {
     <Container>
       <Section
         eyebrow="الاشتراكات"
-        title="عناية فاخرة متكررة، برقي ووضوح"
-        description="الدفع الخاص بالاشتراكات غير مفعّل بعد. تعرض هذه الصفحة الباقات فقط إلى حين ربط تجربة التجارة لاحقًا."
+        title="راحة متجددة دون أن تفكر في إعادة الطلب."
+        description="اشترك لتصل مناديل ديباج رويال إلى منزلك أو مكتبك في الوقت المناسب، مع توفير واضح وتجربة عناية مستمرة تحافظ على مستوى ضيافتك كل يوم."
       >
         <div className="grid gap-6 lg:grid-cols-3">
           {SUBSCRIPTION_PLANS.map((plan) => (
@@ -24,7 +24,7 @@ export default function SubscriptionPage() {
                 {plan.discount}%
               </p>
               <p className="mt-3 text-sm uppercase tracking-[0.22em] text-ink-mute">
-                خصم على كل طلب
+                توفير مستمر على كل طلب
               </p>
               <ul className="mt-8 grid gap-3 text-sm leading-7 text-ink-soft">
                 {plan.features.ar.map((feature) => (
@@ -32,7 +32,7 @@ export default function SubscriptionPage() {
                 ))}
               </ul>
               <Button href="/contact" variant="secondary" className="mt-8 w-full">
-                تسجيل الاهتمام
+                ابدأ اشتراكك
               </Button>
             </article>
           ))}

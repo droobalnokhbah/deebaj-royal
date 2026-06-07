@@ -33,10 +33,10 @@ export default function ShopPage() {
               مجموعة ديباج رويال
             </p>
             <h1 className="font-serif text-5xl font-medium leading-[1.02] text-ink sm:text-6xl lg:text-7xl">
-              اكتشف النعومة كما تُقدّم في الضيافة الراقية.
+              اختر اللمسة التي تليق بضيافتك.
             </h1>
             <p className="mt-7 text-lg leading-9 text-ink-soft sm:text-xl sm:leading-10">
-              تجربة تسوق بلا ازدحام أو خصومات صاخبة. اختر المنتج بحسب اللحظة: المنزل، الضيافة، المكتب، السفر، أو الهدايا.
+              مجموعة مصممة لكل لحظة استخدام: من علبة يومية أنيقة على طاولة المنزل، إلى شدّات أكبر تمنحك وفرة وجودة ثابتة لمساحات الضيافة والعمل.
             </p>
           </div>
 
@@ -57,8 +57,8 @@ export default function ShopPage() {
       <Container>
         <Section
           eyebrow="تصنيف واضح"
-          title="اختر بحسب نوع العبوة."
-          description="تم ترتيب المجموعة إلى مناديل فردية وشدّات كبيرة، حتى تبقى المقارنة واضحة والاختيار أسهل."
+          title="مجموعة واضحة، قرار أسهل."
+          description="قسّمنا المنتجات إلى مناديل فردية وشدّات كبيرة، لتقارن الحجم والاستخدام والقيمة بثقة ومن دون تشتيت."
         >
           <div className="space-y-20">
             <section>
@@ -120,7 +120,7 @@ export default function ShopPage() {
             تحتاج مساعدة في الاختيار؟
           </p>
           <h2 className="mx-auto mt-5 max-w-3xl font-serif text-4xl font-medium leading-[1.08] text-ink sm:text-5xl">
-            ابدأ بالمنتج المناسب للمكان الذي تريد أن يترك انطباعًا.
+            أخبرنا عن استخدامك، ونقترح لك الاختيار الأنسب.
           </h2>
           <Button href="/contact" variant="secondary" className="mt-9">
             استشارة خاصة

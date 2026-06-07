@@ -6,20 +6,19 @@ export default function WholesalePage() {
   return (
     <Container>
       <Section
-        eyebrow="Wholesale"
-        title="A dedicated B2B route for hospitality and business supply"
-        description="Phase 1 keeps wholesale simple and static. Lead forms, CRM routing, pricing tiers, and account workflows can be added after the route foundation is stable."
+        eyebrow="للشركات والضيافة"
+        title="توريد راقٍ يرفع تفاصيل المكان."
+        description="نوفر حلول توريد مناسبة للفنادق، المطاعم، المكاتب، العيادات، وقاعات الضيافة التي تبحث عن منتج عملي بجودة ثابتة وحضور بصري يليق بتجربتها."
       >
         <div className="rounded-[2rem] border border-sand-200 bg-cream-soft p-8 sm:p-10">
           <h1 className="font-serif text-3xl font-medium text-ink">
-            Premium supply for hotels, offices, clinics, and restaurants.
+            جودة يومية تليق بضيوفك وفريقك وعملائك.
           </h1>
           <p className="mt-5 max-w-2xl leading-8 text-ink-soft">
-            The later wholesale phase should support structured quote requests,
-            monthly quantity estimates, and business contact details.
+            احصل على كميات مخصصة، وتوريد منتظم، وخيارات تناسب حجم استهلاكك الشهري. ديباج رويال يمنح منشأتك منتجًا موثوقًا بتغليف أنيق يعكس مستوى المكان.
           </p>
           <Button href="mailto:info@deebajroyal.com" variant="secondary" className="mt-8">
-            Contact wholesale
+            اطلب عرض سعر
           </Button>
         </div>
       </Section>
