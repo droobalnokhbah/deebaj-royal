@@ -21,12 +21,12 @@ export function Header() {
           </span>
         </Container>
       </div>
-      <Container className="flex min-h-20 items-center justify-between gap-5">
+      <Container className="flex min-h-24 items-center justify-between gap-5">
         <Link href="/" className="shrink-0">
-          <span className="block font-logo text-base tracking-[0.4em] text-ink sm:text-lg">
+          <span className="block font-logo text-2xl tracking-[0.26em] text-ink sm:text-3xl sm:tracking-[0.34em]">
             D E E B A J
           </span>
-          <span className="block text-center text-xs uppercase tracking-[0.34em] text-honey">
+          <span className="block text-center text-sm uppercase tracking-[0.32em] text-honey sm:text-base sm:tracking-[0.38em]">
             R O Y A L
           </span>
         </Link>

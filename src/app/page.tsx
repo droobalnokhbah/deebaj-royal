@@ -31,7 +31,7 @@ export default function HomePage() {
             <p className="mb-7 text-xs font-semibold uppercase tracking-[0.38em] text-honey">
               ديباج رويال
             </p>
-            <h1 className="font-serif text-6xl font-medium leading-[0.95] text-ink sm:text-7xl lg:text-[7.5rem]">
+            <h1 className="font-serif text-4xl font-medium leading-[1.12] text-ink sm:text-5xl lg:text-[4.75rem] lg:leading-[1.05]">
               رفاهية تُرى قبل أن تُلمس.
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-9 text-ink-soft sm:text-xl sm:leading-10">
