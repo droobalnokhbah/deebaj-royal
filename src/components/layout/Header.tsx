@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { HeaderCartLink } from '@/components/commerce/HeaderCartLink';
 import { MobileNavigation } from '@/components/layout/MobileNavigation';
 import { Container } from '@/components/ui/Container';
 
@@ -46,12 +47,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/checkout"
-            className="hidden rounded-full border border-champagne-warm/40 px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-honey hover:bg-champagne-pale sm:inline-flex"
-          >
-            السلة
-          </Link>
+          <HeaderCartLink />
           <MobileNavigation items={navItems} />
         </div>
       </Container>

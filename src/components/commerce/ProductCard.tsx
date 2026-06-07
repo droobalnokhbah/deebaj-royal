@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Product } from '@/data/products';
 import { Button } from '@/components/ui/Button';
+import { QuickAddToCartButton } from '@/components/commerce/QuickAddToCartButton';
 
 type ProductCardProps = {
   product: Product;
@@ -52,6 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Button href={href} variant="secondary" className="mt-8 w-full">
           عرض المنتج
         </Button>
+        <QuickAddToCartButton product={product} />
       </div>
     </article>
   );

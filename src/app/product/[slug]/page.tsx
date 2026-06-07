@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { ProductCard } from '@/components/commerce/ProductCard';
+import { ProductPurchaseControls } from '@/components/commerce/ProductPurchaseControls';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -93,17 +94,12 @@ export default function ProductPage({ params }: ProductPageProps) {
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <Button href="/checkout">
-                  ابدأ الطلب بهدوء
-                </Button>
+              <ProductPurchaseControls product={product} />
+              <div className="mt-4">
                 <Button href="/shop" variant="secondary">
                   العودة للمجموعة
                 </Button>
               </div>
-              <p className="mt-5 text-xs leading-6 text-ink-mute">
-                الدفع الفعلي غير مفعّل في هذه المرحلة. سيتم ربط تجربة الشراء لاحقًا.
-              </p>
             </div>
           </div>
         </Section>
