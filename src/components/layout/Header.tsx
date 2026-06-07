@@ -23,11 +23,11 @@ export function Header() {
       </div>
       <Container className="flex min-h-24 items-center justify-between gap-5">
         <Link href="/" className="shrink-0">
-          <span className="block font-logo text-2xl tracking-[0.26em] text-ink sm:text-3xl sm:tracking-[0.34em]">
-            D E E B A J
+          <span className="block font-logo text-2xl font-black tracking-[0.08em] text-ink sm:text-3xl sm:tracking-[0.1em]">
+            DEEBAJ
           </span>
-          <span className="block text-center text-sm uppercase tracking-[0.32em] text-honey sm:text-base sm:tracking-[0.38em]">
-            R O Y A L
+          <span className="block text-center text-sm font-semibold uppercase tracking-[0.24em] text-honey sm:text-base sm:tracking-[0.28em]">
+            ROYAL
           </span>
         </Link>
 
