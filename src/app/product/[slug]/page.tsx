@@ -31,7 +31,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const features = product.features.ar;
   const heroImage = product.images[0];
   const relatedProducts = PRODUCTS.filter((item) => item.slug !== product.slug)
-    .filter((item) => item.category === product.category || item.isFeatured)
+    .filter((item) => item.usageCategory === product.usageCategory || item.isFeatured)
     .slice(0, 3);
   const categoryLabel = {
     classic: 'الاستخدام اليومي الراقي',
@@ -39,7 +39,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     eco: 'اختيار مستدام',
     travel: 'للتنقل والسفر',
     gold: 'إصدار الهدايا',
-  }[product.category];
+  }[product.usageCategory];
 
   const occasions = ['المجلس والضيافة', 'غرف النوم الفاخرة', 'المكاتب الراقية', 'الهدايا اليومية'];
 

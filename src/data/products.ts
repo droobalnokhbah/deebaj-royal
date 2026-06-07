@@ -14,7 +14,8 @@ export interface Product {
   descEn: string;
   price: number;          // SAR
   comparePrice?: number;  // Original price (for discounts)
-  category: 'classic' | 'premium' | 'eco' | 'travel' | 'gold';
+  category: 'single' | 'bundle';
+  usageCategory: 'classic' | 'premium' | 'eco' | 'travel' | 'gold';
   features: {
     ar: string[];
     en: string[];
@@ -42,7 +43,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'النسخة الذهبية الحصرية بتغليف فاخر للمناسبات الراقية.',
     descEn: 'Exclusive gold edition with luxurious packaging for special occasions.',
     price: 120,
-    category: 'gold',
+    category: 'bundle',
+    usageCategory: 'gold',
     features: {
       ar: [
         'تغليف ذهبي حصري',
@@ -72,7 +74,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'الحجم العائلي بطبقات إضافية لراحة أكبر طوال اليوم.',
     descEn: 'Family-size pack with extra layers for all-day comfort.',
     price: 60,
-    category: 'classic',
+    category: 'single',
+    usageCategory: 'classic',
     features: {
       ar: ['٦ طبقات', '٢٠٠ منديل', 'تصميم عائلي', 'توفير أكبر'],
       en: ['6 layers', '200 sheets', 'Family design', 'Better value'],
@@ -92,7 +95,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'تصميم احترافي للمكاتب وقاعات الاجتماعات.',
     descEn: 'Professional design for offices and meeting rooms.',
     price: 50,
-    category: 'classic',
+    category: 'single',
+    usageCategory: 'classic',
     features: {
       ar: ['تصميم مكتبي', '٦ طبقات', 'مناسب للشركات', 'بالجملة'],
       en: ['Office design', '6 layers', 'B2B friendly', 'Bulk available'],
@@ -112,7 +116,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'تجربة فاخرة بتصميم أنيق وملمس استثنائي يليق بضيافتك المسائية.',
     descEn: 'A luxurious experience with elegant design and exceptional texture.',
     price: 65,
-    category: 'premium',
+    category: 'single',
+    usageCategory: 'premium',
     features: {
       ar: ['٦ طبقات بريميوم', '١٨٠ منديل', 'تصميم فاخر', 'علبة هدايا'],
       en: ['6 premium layers', '180 sheets', 'Luxury design', 'Gift box'],
@@ -132,7 +137,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'النعومة الأصلية بست طبقات حقيقية. مثالي للاستخدام اليومي والضيافة.',
     descEn: 'Original softness in six genuine layers. Perfect for daily use and hospitality.',
     price: 45,
-    category: 'classic',
+    category: 'single',
+    usageCategory: 'classic',
     features: {
       ar: [
         '٦ طبقات حقيقية',
@@ -165,7 +171,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'الخيار الصديق للبيئة من خامات مستدامة بشهادة FSC.',
     descEn: 'Eco-friendly choice from sustainable FSC-certified materials.',
     price: 48,
-    category: 'eco',
+    category: 'single',
+    usageCategory: 'eco',
     features: {
       ar: ['خامات مستدامة', 'شهادة FSC', '٦ طبقات', 'صديق للبيئة'],
       en: ['Sustainable materials', 'FSC certified', '6 layers', 'Eco-friendly'],
@@ -185,7 +192,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'حجم السفر المثالي لحقيبتك أو سيارتك.',
     descEn: 'Perfect travel size for your bag or car.',
     price: 35,
-    category: 'travel',
+    category: 'single',
+    usageCategory: 'travel',
     features: {
       ar: ['حجم محمول', '٦ طبقات', 'سهل الحمل', 'مثالي للسفر'],
       en: ['Portable size', '6 layers', 'Easy to carry', 'Travel-friendly'],
@@ -205,7 +213,8 @@ export const PRODUCTS: Product[] = [
     descAr: 'مناديل قوية للمطبخ بامتصاص فائق وسماكة حقيقية.',
     descEn: 'Strong kitchen tissue with superior absorption.',
     price: 55,
-    category: 'classic',
+    category: 'bundle',
+    usageCategory: 'classic',
     features: {
       ar: ['امتصاص فائق', '٦ طبقات قوية', 'للمطبخ', 'متينة'],
       en: ['Superior absorption', '6 strong layers', 'For kitchen', 'Durable'],
@@ -229,8 +238,8 @@ export const getProductById = (id: number) =>
 export const getFeaturedProducts = () =>
   PRODUCTS.filter((p) => p.isFeatured);
 
-export const getProductsByCategory = (category: Product['category']) =>
-  PRODUCTS.filter((p) => p.category === category);
+export const getProductsByCategory = (category: Product['usageCategory']) =>
+  PRODUCTS.filter((p) => p.usageCategory === category);
 
 // ════════════════════════════════════════════
 // Subscription Plans

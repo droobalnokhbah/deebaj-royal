@@ -6,29 +6,22 @@ import { Section } from '@/components/ui/Section';
 import { PRODUCTS } from '@/data/products';
 
 export default function ShopPage() {
-  const categoryLabels = [
-    {
-      key: 'classic',
-      label: 'اليومي الراقي',
-      count: PRODUCTS.filter((product) => product.category === 'classic').length,
-    },
-    {
-      key: 'premium',
-      label: 'الضيافة المسائية',
-      count: PRODUCTS.filter((product) => product.category === 'premium').length,
-    },
-    {
-      key: 'gold',
-      label: 'إصدار الهدايا',
-      count: PRODUCTS.filter((product) => product.category === 'gold').length,
-    },
-    {
-      key: 'travel',
-      label: 'للتنقل',
-      count: PRODUCTS.filter((product) => product.category === 'travel').length,
-    },
+  const singleProductOrder = [
+    'deebaj-classic',
+    'deebaj-family',
+    'deebaj-night',
+    'deebaj-eco',
+    'deebaj-travel',
+    'deebaj-office',
   ];
-
+  const bundleProductOrder = ['deebaj-gold', 'deebaj-kitchen'];
+  const productsBySlug = new Map(PRODUCTS.map((product) => [product.slug, product]));
+  const singleProducts = singleProductOrder
+    .map((slug) => productsBySlug.get(slug))
+    .filter((product): product is (typeof PRODUCTS)[number] => Boolean(product));
+  const bundleProducts = bundleProductOrder
+    .map((slug) => productsBySlug.get(slug))
+    .filter((product): product is (typeof PRODUCTS)[number] => Boolean(product));
   const trustItems = ['شحن موثوق داخل المملكة', 'خيارات دفع متعددة لاحقًا', 'ست طبقات حقيقية', 'تغليف يليق بالضيافة'];
 
   return (
@@ -64,27 +57,49 @@ export default function ShopPage() {
       <Container>
         <Section
           eyebrow="تصنيف واضح"
-          title="اختر بحسب الاستخدام، لا بحسب الضجيج."
-          description="بدل بطاقات مزدحمة وعروض متداخلة، يركّز المتجر على وضوح الاستخدام، جودة الملمس، وحضور التغليف."
+          title="اختر بحسب نوع العبوة."
+          description="تم ترتيب المجموعة إلى مناديل فردية وشدّات كبيرة، حتى تبقى المقارنة واضحة والاختيار أسهل."
         >
-          <div className="mb-12 flex flex-wrap gap-3">
-            {categoryLabels.map((category) => (
-              <span
-                key={category.key}
-                className="rounded-full border border-champagne-warm/40 bg-cream px-5 py-3 text-sm font-medium text-ink-soft"
-              >
-                {category.label}
-                <span className="mx-2 text-honey">{category.count}</span>
-              </span>
-            ))}
-          </div>
-
-          <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-4">
-            {PRODUCTS.map((product) => (
-              <div key={product.id}>
-                <ProductCard product={product} />
+          <div className="space-y-20">
+            <section>
+              <div className="mb-8 flex flex-col gap-3 border-b border-champagne/60 pb-6 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-honey">
+                    Individual Packs
+                  </p>
+                  <h2 className="mt-3 font-serif text-4xl font-medium text-ink sm:text-5xl">
+                    المناديل الفردية
+                  </h2>
+                </div>
+                <p className="text-sm text-ink-soft">{singleProducts.length} منتجات</p>
               </div>
-            ))}
+
+              <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-4">
+                {singleProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <div className="mb-8 flex flex-col gap-3 border-b border-champagne/60 pb-6 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-honey">
+                    Bulk Bundles
+                  </p>
+                  <h2 className="mt-3 font-serif text-4xl font-medium text-ink sm:text-5xl">
+                    الشدّات والعبوات الكبيرة
+                  </h2>
+                </div>
+                <p className="text-sm text-ink-soft">{bundleProducts.length} منتجات</p>
+              </div>
+
+              <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-4">
+                {bundleProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </section>
           </div>
         </Section>
       </Container>
