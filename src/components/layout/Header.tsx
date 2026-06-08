@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { HeaderCartLink } from '@/components/commerce/HeaderCartLink';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
@@ -31,12 +32,14 @@ export function Header({ locale, dictionary }: HeaderProps) {
       </div>
       <Container className="flex min-h-24 items-center justify-between gap-5">
         <Link href={localizedPath(locale, '/')} className="shrink-0">
-          <span className="block font-logo text-3xl font-black tracking-[0.04em] text-ink sm:text-4xl sm:tracking-[0.06em] lg:text-5xl">
-            DEEBAJ
-          </span>
-          <span className="block text-center text-sm font-semibold uppercase tracking-[0.2em] text-honey sm:text-base sm:tracking-[0.24em] lg:text-lg">
-            ROYAL
-          </span>
+          <Image
+            src="/deebaj-royal-logo.png"
+            alt="Deebaj Royal"
+            width={1024}
+            height={420}
+            priority
+            className="h-auto w-40 sm:w-52 lg:w-60"
+          />
         </Link>
 
         <nav
