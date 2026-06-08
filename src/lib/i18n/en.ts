@@ -213,8 +213,12 @@ const en = {
     choosePayment: 'Choose payment method',
     activating: 'Activating soon',
     bankDetails: 'Bank transfer details',
+    bankName: 'Bank name',
+    accountName: 'Account name',
+    iban: 'IBAN',
     bankInstructions:
-      'After transfer, send the proof via WhatsApp. The order will be marked as “Awaiting transfer confirmation”.',
+      'After transferring, send a receipt image via WhatsApp to confirm the order.',
+    sendReceipt: 'Send receipt via WhatsApp',
     customerDetails: 'Customer details',
     deliveryInfo: 'Delivery information',
     name: 'Full name',

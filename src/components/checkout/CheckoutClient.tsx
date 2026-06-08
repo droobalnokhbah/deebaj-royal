@@ -13,7 +13,11 @@ import { localizedPath, type Dictionary } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n/types';
 
 const FREE_SHIPPING_THRESHOLD = 200;
-const BANK_IBAN_PLACEHOLDER = 'SA00 0000 0000 0000 0000 0000';
+const BANK_NAME = 'مصرف الراجحي';
+const BANK_NAME_EN = 'Al Rajhi Bank';
+const BANK_ACCOUNT_NAME = 'مؤسسة دروب الرقمية الحديثة للخدمات التسويقية';
+const BANK_IBAN_PLACEHOLDER = '__IBAN__';
+const WHATSAPP_RECEIPT_URL = 'https://wa.me/966580209346';
 
 type PaymentAvailability = {
   moyasar: boolean;
@@ -504,10 +508,35 @@ export function CheckoutClient({ locale, dictionary, paymentAvailability }: Chec
           {paymentId === 'bank' && (
             <div className="mt-6 rounded-[2rem] border border-champagne-warm/40 bg-champagne-pale p-5 text-sm leading-8 text-ink-soft">
               <p className="font-semibold text-ink">{dictionary.bankDetails}</p>
-              <p className="mt-2">IBAN: {BANK_IBAN_PLACEHOLDER}</p>
-              <p>
+              <dl className="mt-4 grid gap-3">
+                <div className="rounded-2xl bg-cream/70 px-4 py-3">
+                  <dt className="text-xs font-semibold text-honey">{dictionary.bankName}</dt>
+                  <dd className="mt-1 font-semibold text-ink">
+                    {BANK_NAME} <span className="text-ink-mute">({BANK_NAME_EN})</span>
+                  </dd>
+                </div>
+                <div className="rounded-2xl bg-cream/70 px-4 py-3">
+                  <dt className="text-xs font-semibold text-honey">{dictionary.accountName}</dt>
+                  <dd className="mt-1 font-semibold text-ink">{BANK_ACCOUNT_NAME}</dd>
+                </div>
+                <div className="rounded-2xl bg-cream/70 px-4 py-3">
+                  <dt className="text-xs font-semibold text-honey">{dictionary.iban}</dt>
+                  <dd className="mt-1 font-mono text-base font-semibold tracking-wide text-ink" dir="ltr">
+                    {BANK_IBAN_PLACEHOLDER}
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-4">
                 {dictionary.bankInstructions}
               </p>
+              <a
+                href={WHATSAPP_RECEIPT_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-caramel-deep px-5 text-sm font-semibold text-cream transition-colors hover:bg-ink"
+              >
+                {dictionary.sendReceipt}
+              </a>
             </div>
           )}
         </section>
