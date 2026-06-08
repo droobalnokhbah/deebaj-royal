@@ -17,7 +17,7 @@ const BANK_NAME = 'مصرف الراجحي';
 const BANK_NAME_EN = 'Al Rajhi Bank';
 const BANK_ACCOUNT_NAME = 'مؤسسة دروب الرقمية الحديثة للخدمات التسويقية';
 const BANK_IBAN_PLACEHOLDER = '__IBAN__';
-const WHATSAPP_RECEIPT_URL = 'https://wa.me/966580209346';
+const WHATSAPP_RECEIPT_URL = 'https://wa.me/966535708120';
 
 type PaymentAvailability = {
   moyasar: boolean;

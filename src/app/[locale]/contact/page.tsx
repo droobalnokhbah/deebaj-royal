@@ -24,7 +24,7 @@ export default function ContactPage({ params }: ContactPageProps) {
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-honey">
               {dictionary.contact.whatsapp}
             </p>
-            <p className="mt-4 text-2xl font-semibold text-ink">+966 58 020 9346</p>
+            <p className="mt-4 text-2xl font-semibold text-ink">+966 53 570 8120</p>
           </div>
           <div className="rounded-[2rem] border border-sand-200 bg-cream-soft p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-honey">

@@ -133,7 +133,7 @@ const organizationSchema = {
   url: 'https://deebajroyal.com',
   logo: 'https://deebajroyal.com/logo.png',
   description: 'علامة سعودية فاخرة للعناية اليومية',
-  telephone: '+966580209346',
+  telephone: '+966535708120',
   email: 'info@deebajroyal.com',
   address: {
     '@type': 'PostalAddress',
@@ -158,7 +158,7 @@ const storeSchema = {
   image: 'https://deebajroyal.com/logo.png',
   '@id': 'https://deebajroyal.com',
   url: 'https://deebajroyal.com',
-  telephone: '+966580209346',
+  telephone: '+966535708120',
   priceRange: 'SAR 35 - SAR 120',
   address: {
     '@type': 'PostalAddress',
