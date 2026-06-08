@@ -18,7 +18,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
   ];
 
   return (
-    <footer className="border-t border-champagne/60 bg-champagne-pale">
+    <footer className="border-t border-champagne/60 bg-white">
       <Container className="grid gap-12 py-14 sm:grid-cols-[1.2fr_1fr] lg:py-20">
         <div>
           <p className="font-logo text-lg tracking-[0.32em] text-ink">

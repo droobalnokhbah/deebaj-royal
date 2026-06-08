@@ -18,8 +18,8 @@ export default function HomePage({ params }: HomePageProps) {
 
   return (
     <>
-      <section className="relative isolate min-h-[calc(100vh-7.25rem)] overflow-hidden border-b border-champagne/60 bg-cream">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_72%_36%,rgba(215,188,130,0.34),transparent_34%),linear-gradient(135deg,#FBF7EF_0%,#F7EEDB_48%,#EFE1C8_100%)]" />
+      <section className="relative isolate min-h-[calc(100vh-7.25rem)] overflow-hidden border-b border-champagne/60 bg-white">
+        <div className="absolute inset-0 -z-10 bg-white" />
         <div className="absolute bottom-0 right-0 -z-10 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
         <div className="absolute left-0 top-16 -z-10 h-96 w-96 rounded-full bg-champagne/25 blur-3xl" />
         <Container className="relative grid min-h-[calc(100vh-7.25rem)] items-center gap-12 py-14 sm:py-16 lg:grid-cols-[0.82fr_1.18fr] lg:py-20">
@@ -58,7 +58,7 @@ export default function HomePage({ params }: HomePageProps) {
         </Container>
       </section>
 
-      <section className="border-y border-champagne/60 bg-champagne-pale text-ink-soft">
+      <section className="border-y border-champagne/60 bg-white text-ink-soft">
         <Container className="grid gap-4 py-8 md:grid-cols-3">
           {dictionary.home.trust.map(([icon, title, description]) => (
             <div
@@ -98,7 +98,7 @@ export default function HomePage({ params }: HomePageProps) {
         </Section>
       </Container>
 
-      <section className="bg-champagne-pale">
+      <section className="bg-white">
         <Container>
           <Section
             eyebrow={dictionary.home.collection.eyebrow}
@@ -143,7 +143,7 @@ export default function HomePage({ params }: HomePageProps) {
         </Section>
       </Container>
 
-      <section className="bg-cream-warm">
+      <section className="bg-white">
         <Container>
           <Section
             eyebrow={dictionary.home.trustSection.eyebrow}

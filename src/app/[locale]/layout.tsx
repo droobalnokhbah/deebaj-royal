@@ -201,7 +201,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(storeSchema) }}
         />
       </head>
-      <body className="bg-cream text-ink font-arabic antialiased">
+      <body className="bg-white text-ink font-arabic antialiased">
         <Header locale={locale} dictionary={dictionary.header} />
         <main>{children}</main>
         <Footer locale={locale} dictionary={dictionary.footer} />

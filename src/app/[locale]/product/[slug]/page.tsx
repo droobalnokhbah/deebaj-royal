@@ -105,7 +105,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         </Section>
       </Container>
 
-      <section className="bg-champagne-pale">
+      <section className="bg-white">
         <Container>
           <Section
             eyebrow={dictionary.product.storyEyebrow}
@@ -166,17 +166,17 @@ export default function ProductPage({ params }: ProductPageProps) {
         </Section>
       </Container>
 
-      <section className="bg-caramel-deep text-cream">
+      <section className="bg-white text-ink">
         <Container>
           <Section
             eyebrow={dictionary.product.valueEyebrow}
             title={dictionary.product.valueTitle}
             description={dictionary.product.valueDescription}
-            className="text-cream [&_h2]:text-cream [&_p]:text-cream/75"
+            className="text-ink [&_h2]:text-ink [&_p]:text-ink-soft"
           >
             <div className="grid gap-4 md:grid-cols-3">
               {dictionary.product.valueItems.map((item) => (
-                <div key={item} className="rounded-[2rem] border border-champagne/25 bg-cream/5 px-6 py-6 text-center text-sm font-semibold text-cream">
+                <div key={item} className="rounded-[2rem] border border-champagne/60 bg-white px-6 py-6 text-center text-sm font-semibold text-ink shadow-[0_14px_40px_rgba(51,38,28,0.04)]">
                   {item}
                 </div>
               ))}

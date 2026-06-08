@@ -21,7 +21,7 @@ export function Header({ locale, dictionary }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-champagne/60 bg-cream/95 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-champagne/60 bg-white/95 backdrop-blur-xl">
       <div className="border-b border-champagne/50 bg-champagne-pale text-ink-soft">
         <Container className="flex min-h-9 items-center justify-center text-center text-[11px] font-medium tracking-[0.12em]">
           <span>

@@ -34,7 +34,7 @@ export default function ShopPage({ params }: ShopPageProps) {
 
   return (
     <>
-      <section className="border-b border-champagne/60 bg-champagne-pale">
+      <section className="border-b border-champagne/60 bg-white">
         <Container className="grid gap-12 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-32">
           <div className="max-w-3xl">
             <p className="mb-7 text-xs font-semibold uppercase tracking-[0.34em] text-honey">
@@ -112,7 +112,7 @@ export default function ShopPage({ params }: ShopPageProps) {
         </Section>
       </Container>
 
-      <section className="bg-cream-warm text-ink-soft">
+      <section className="bg-white text-ink-soft">
         <Container className="grid gap-4 py-8 text-sm sm:grid-cols-2 lg:grid-cols-4">
           {trustItems.map((item) => (
             <div key={item} className="rounded-full border border-champagne-warm/40 bg-cream/60 px-5 py-3 text-center">
